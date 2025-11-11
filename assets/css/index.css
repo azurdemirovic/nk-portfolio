@@ -1,0 +1,924 @@
+/* Debug */
+* {
+  /* outline: 1px solid red; */
+}
+
+/* Reset */
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Base */
+html {
+  --projNumWidth: 45px;
+  /* width of view, back, exit buttons */
+  --rightsideButtonWidth: 40px;
+  --centeredTextWidth: 556px;
+  --lineHeight: 24px;
+  --verticalMargin: 14px;
+  --horizontalMargin: 16px;
+  /* To get things aligned symmetrically with the project title */
+  --maxContentWidth: calc(100% - (2 * var(--projNumWidth)));
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.75px;
+  word-spacing: -1px;
+  line-height: 24px;
+  -webkit-text-stroke: 0.35px black;
+}
+
+body {
+  /* needs a position property set for `position: absolute` on #mqr to work */
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--siteColor);
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+div {
+  display: inline-block;
+}
+
+button {
+  font-size: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  letter-spacing: inherit;
+  background: inherit;
+  border: none;
+  background: white;
+  cursor: pointer;
+  color: black;
+}
+
+a:focus,
+button:focus {
+  outline: none;
+}
+
+/* Barba */
+body.transitioning {
+  pointer-events: none;
+}
+
+body.transitioning > div {
+  position: absolute;
+}
+
+body.transitioning > .exiting {
+  position: fixed;
+  clip-path: inset(0%);
+  will-change: clip-path;
+  transition: clip-path linear 1050ms;
+  z-index: 10;
+}
+
+body.transitioning > .entering {
+  position: static;
+}
+
+div[data-barba="container"] {
+  min-height: 100vh;
+  width: 100%;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+div[data-barba="container"][data-barba-namespace="project"] {
+  padding: 0;
+}
+
+div[data-barba-namespace="project"] .tinted-bg {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  background-color: var(--siteColorTinted);
+}
+
+
+.pay {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.75px;
+  word-spacing: -1px;
+  line-height: 24px;
+  -webkit-text-stroke: 0.35px black;
+  background-color: rgba(255, 255, 255, 0);
+  border: 2px solid black;
+  width: 265px;
+  margin-top: 5px;
+  padding-bottom: 3px;
+  height: 47px;
+  text-align: center;
+  border-radius: 40px;
+  margin-left: -2px;
+}
+
+/* INTRODUCTION */
+.centered-list {
+  --stWidth: 32px;
+
+  position: relative;
+  left: calc(var(--stWidth) / 2);
+  width: calc(var(--centeredTextWidth) - var(--stWidth));
+  align-content: center;
+  text-align: start;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.centered {
+  width: var(--centeredTextWidth);
+  display: block;
+  margin: 0 auto;
+  text-align: start;
+}
+
+#introduction ul li::before,
+#conclusion ul li::before {
+  content: "NK";
+  position: absolute;
+  transform: translateX(-125%);
+}
+
+#conclusion #contact {
+  text-align: left;
+  width: 556px;
+}
+
+#introduction {
+  padding-top: 191px;
+  padding-bottom: 191px;
+}
+
+#info {
+  padding-top: 191px;
+  padding-bottom: 191px;
+  width: 100%;
+}
+
+#footer {
+  padding-bottom: 14px;
+}
+
+#headerContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--lineHeight);
+}
+
+div[data-barba-namespace="project"] #headerContainer {
+  margin-bottom: var(--lineHeight);
+}
+
+#infoButton {
+  color: black;
+  height: fit-content;
+  border-bottom: 2px solid white;
+  margin-left: var(--projNumWidth);
+}
+
+#homepage {
+  visibility: hidden;
+}
+
+/* PROJECTS */
+.projects {
+  width: 100%;
+}
+
+.project {
+  width: 100%;
+}
+
+.projectLabel {
+  margin-right: 20px;
+  display: inline;
+}
+
+.projectLabel:last-of-type {
+  margin-right: 0;
+}
+
+
+.projectLabelNum {
+  width: var(--projNumWidth);
+  float: left;
+}
+
+.projectLabelContainer {
+  width: calc(100% - var(--projNumWidth));
+}
+
+.projectMeta {
+  display: block;
+  /* max-width on this prevents long titles from breaking to next line */
+  max-width: calc(100% - var(--rightsideButtonWidth) - 10px);
+  margin-bottom: var(--lineHeight);
+}
+
+div[data-barba-namespace="project"] .projectMeta {
+  margin-bottom: calc(var(--lineHeight) * 2);
+}
+
+#lightbox .projectLabelContainer {
+  position: relative; /* need this for z-indexing */
+  z-index: 10;
+}
+
+.projectView {
+  float: right;
+  color: black;
+  padding-bottom: 1px;
+
+  text-decoration: none;
+  box-sizing: content-box;
+  border-bottom: 2px solid white;
+}
+
+.projectDescriptionContainer {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  color: black;
+  background-color: var(--siteColor);
+  -webkit-text-stroke: 0.35px black;
+  position: absolute;
+}
+
+.projectDescription {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: var(--centeredTextWidth);
+  max-width: calc(100% - 80px); /* container padding is 40px */
+  text-align: start;
+  hyphens: auto;
+  cursor: default;
+}
+
+.projectDescription p:not(:first-child) {
+  text-indent: var(--projNumWidth);
+}
+
+.projectText {
+  display: block;
+  margin: var(--lineHeight) auto;
+  /* 
+    1101px bc 1101 / 1.5 (the natural aspect ratio of the images) is a whole number, 
+    1100px causes a 1px line to appear at the bottom of text slides
+  */
+  width: 1101px;
+  max-width: var(--maxContentWidth);
+  text-align: start;
+}
+
+.projectText p:not(:first-of-type) {
+  text-indent: var(--projNumWidth);
+}
+
+
+/* CAROUSEL */
+.slide {
+  overflow: hidden;
+  position: absolute;
+  object-fit: cover;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+
+  clip-path: inset(0%);
+  will-change: clip-path;
+  /* 
+    We're setting and unsetting `transition` using JS to prevent an unsightly reverse animation 
+    when overlayed images haven't loaded yet. Leaving this rule here for documentation.
+  */
+  /* transition: clip-path linear 1050ms; */
+
+  line-height: 24px;
+}
+
+.slide:nth-of-type(1) {
+  z-index: 3;
+}
+
+.slide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+
+.carouselArea {
+  position: fixed;
+
+  height: auto;
+  /* 
+    1101px bc 1101 / 1.5 (the natural aspect ratio of the images) is a whole number, 
+    1100px causes a 1px line to appear at the bottom of text slides
+  */
+  width: 1101px;
+  max-width: var(--maxContentWidth);
+  aspect-ratio: 1.5; /* doesn't work on iOS 14 so we'll use the padding aspect-ratio workaround */
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 14px 0;
+
+  /* fixes extra height added by using the aspect-ratio workaround */
+  line-height: 0;
+}
+
+.carouselArea.shortened {
+  /* rounding down calc(1101px * 0.75); */
+  width: 825px;
+  max-width: calc(var(--maxContentWidth) * 0.75);
+}
+
+.relative {
+  position: relative !important;
+  top: 0;
+  transform: translate(-50%, 0);
+}
+
+/* LOADER */
+.loaderContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: visible;
+}
+
+.loader-text {
+  position: absolute;
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+
+.loader-signature {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+}
+
+.loader-signature img {
+  height: 90vh;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transform: rotate(-90deg);
+  display: block;
+  object-fit: contain;
+  max-width: 100vh;
+}
+
+.loader {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  background-color: var(--siteColor);
+  clip-path: inset(0%);
+  transition: clip-path 2s linear;
+  will-change: clip-path;
+  overflow: visible;
+  display: block;
+}
+
+#spacer {
+  visibility: hidden;
+}
+
+.mobile-andmore {
+  display: none;
+}
+
+.full-w {
+  width: 100%;
+}
+
+.full-w-margins {
+  margin: var(--lineHeight) auto;
+  width: 1101px;
+  max-width: var(--maxContentWidth);
+  text-align: start;
+  display: block;
+}
+
+.marquee {
+  position: absolute;
+  /* bottom: -2px;  */
+  /* offset 2px bottom padding */
+  /* left: -16px; */
+  bottom: 12px;
+  left: 0;
+  margin: 0 auto;
+  padding-bottom: 2px;
+  width: 100%;
+  height: 30px;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.marquee p {
+  display: inline;
+  font-size: 22px !important;
+  -webkit-text-size-adjust: 100%;
+}
+
+.marquee-spacer {
+  width: 100%;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+/* Thumbnail Grid  */
+.gridContainer {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 1101px;
+  max-width: var(--maxContentWidth);
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  font-size: 0;
+  line-height: 0;
+}
+
+.grid-item {
+  box-sizing: border-box;
+  cursor: pointer;
+  height: auto;
+  width: 100%;
+}
+
+picture.grid-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Lightbox */
+#lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+  visibility: hidden;
+  background-color: var(--siteColor);
+  z-index: 10;
+
+  clip-path: inset(0% 0% 0% 100%);
+  will-change: clip-path;
+}
+
+#lightbox.open {
+  visibility: visible;
+  clip-path: inset(0%);
+}
+
+.carouselContainer {
+  /* workaround for iOS 14, aspect-ratio in the parent container is not supported */
+  /* https://stackoverflow.com/a/29194256 */
+  padding-bottom: calc(100% / 1.5);
+}
+
+#lightbox .carouselArea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: calc(var(--verticalMargin) * 4) var(--horizontalMargin);
+  margin: 0;
+}
+
+@media only screen and (max-width: 1000px) {
+  #lightbox .carouselArea {
+    padding: calc(var(--verticalMargin) * 6) var(--horizontalMargin);
+  }
+}
+
+#lightbox .carouselContainer {
+  /* unset aspect-ratio workaround */
+  padding-bottom: 0;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  left: 0;
+  top: 0;
+}
+
+#lightbox .slide img {
+  /* center the image */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* proportionally constrains the height and width by the parent elements dimensions */
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.leftButton {
+  opacity: 0;
+  /* margin-top: 16px; */
+  position: absolute;
+  width: 50%;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 3;
+}
+
+.rightButton {
+  /* margin-top: 16px; */
+  opacity: 0;
+  position: absolute;
+  width: 50%;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  z-index: 3;
+}
+
+#exit,
+#close {
+  float: right;
+  color: black;
+  padding-bottom: 1px;
+  text-decoration: none;
+  box-sizing: content-box;
+  border-bottom: none;
+  cursor: pointer;
+  margin: 0;
+  border-bottom: 2px solid transparent;
+}
+
+.mobileprojectDescription {
+  display: none;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  width: 100%;
+  top: 50%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+#mobile-contact {
+  display: none;
+  text-align: center;
+  width: 100%;
+}
+
+/* Screensaver */
+#screensaver {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  clip-path: inset(0% 0% 0% 100%);
+  will-change: clip-path;
+  transition: clip-path linear;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+#screensaver.visible {
+  pointer-events: all;
+  clip-path: inset(0%);
+  transition-duration: 2000ms;
+}
+
+#screensaver.instant {
+  pointer-events: all;
+  clip-path: inset(0%);
+}
+
+#screensaver.exiting {
+  clip-path: inset(0% 100% 0% 0%);
+  transition-duration: 2000ms;
+}
+
+#screensaver img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+#screensaver .ss-caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 32px);
+  padding: 14px 16px;
+}
+
+.ss-container {
+  height: 100%;
+  width: 100%;
+}
+
+.ss-container.hidden {
+  display: none;
+}
+
+
+#btt-button {
+  position: fixed;
+  bottom: 14px;
+  right: 16px;
+  padding: 7.5px 7px 7.5px 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.25);
+  background-color: var(--siteColor);
+}
+
+#btt-button,
+#project-buttons {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#btt-button.visible,
+#project-buttons.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Hoverable */
+@media (any-hover: hover) {
+  /* Prevent hoverstates on mobile */
+  .projectView:hover,
+  #infoButton:hover,
+  #exit:hover,
+  #close:hover {
+    border-bottom: 2px solid currentColor;
+  }
+}
+
+/* Mobile */
+@media only screen and (max-width: 800px) {
+  body {
+    --projNumWidth: 35px;
+  }
+
+
+  .mobile-andmore {
+    display: inline;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  #mobile-contact {
+    display: block;
+  }
+
+  .centered-list {
+    width: calc(100% - var(--stWidth));
+    text-align: left;
+  }
+
+  #introduction {
+    text-align: left;
+    padding: 48px 0px;
+  }
+
+  .centered-list {
+    --stWidth: 36px;
+  }
+
+  #introduction,
+  #conclusion {
+    width: calc(100% - var(--projNumWidth));
+  }
+
+  #introduction ul li::before,
+  #conclusion ul li::before {
+    /* move it a smidge to the left */
+    transform: translateX(calc(calc(var(--projNumWidth) + 1px) * -1));
+  }
+
+  .projectLabel {
+    margin-right: 9px;
+  }
+
+  #info {
+    width: 100%;
+    text-align: left;
+    padding: 48px 0px;
+  }
+
+  #contact {
+    width: 100%;
+  }
+
+  .projectDescriptionContainer {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .projectDescription {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 40px;
+  }
+
+  .projectDescription {
+    display: none;
+  }
+
+  .mobileprojectDescription {
+    display: inline-block;
+    text-align: center;
+  }
+  .gridContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .full-w-margins,
+  .projectText {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .carouselArea,
+  .projectText,
+  .gridContainer,
+  .full-w-margins {
+    max-width: 100%;
+  }
+
+  .carouselArea.shortened {
+    max-width: calc(100% * 0.75);
+  }
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+#bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 0 16px 14px;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+#project-buttons,
+#project-buttons ul {
+  display: flex;
+}
+
+#project-buttons li {
+  padding-right: 10px;
+}
+
+#project-buttons #prev {
+  margin-right: 10px;
+}
+
+#project-buttons button {
+  width: fit-content;
+  color: black;
+  text-align: center;
+  padding: 10px;
+  padding-top: 7px;
+  padding-bottom: 8px;
+  background-color: var(--siteColor);
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 0.25);
+  position: relative;
+}
+
+#project-buttons button .title {
+  display: none;
+}
+
+/* #project-buttons button:hover .title {
+  display: unset;
+}
+
+#project-buttons button:hover .num {
+  display: none;
+} */
+
+.hnum {
+  z-index: 1000;
+  box-sizing: content-box;
+  width: fit-content;
+  text-align: center;
+  padding: 10px;
+  padding-top: 7px;
+  padding-bottom: 8px;
+  padding-right: 20px;
+  border-radius: 5px;
+  outline: 1px solid red;
+  display: block;
+  /* Comment the below line for visual debugging */
+  opacity: 0;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#project-buttons li:last-of-type .hnum {
+  padding-right: 10px;
+}
+
+@media (any-hover: hover) and (min-width: 1024px) {
+  .hnum:hover ~ .num {
+    display: none;
+  }
+
+  .hnum:hover ~ .title {
+    display: block !important;
+  }
+}

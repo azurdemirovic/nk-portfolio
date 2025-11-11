@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nadja Kurtalic's portfolio website">
+  <title>Nadja Kurtalic</title>
+
+  <!-- Site color -->
+  <style>
+  html {
+    --siteColor: rgb(204, 206, 69);
+    --siteColorTinted: rgba(204, 206, 69, 0.5);
+  }
+  </style>
+
+  <!-- Assets -->
+  <link href="assets/css/index.css" rel="stylesheet">
+  <script src="assets/js/fontfaceobserver.js"></script>
+  <script src="assets/js/components/DateDisplay.js"></script>
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/js/barba.js"></script>
+  <script src="assets/js/loader.js"></script>
+  <script src="assets/js/homecarousel.js"></script>
+  <script src="assets/js/projectcarousel.js"></script>
+  <script src="assets/js/marquee.js"></script>
+  <script src="assets/js/screensaver.js"></script>
+  <script src="assets/js/smoothscroll.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JT0G06KY8X"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-JT0G06KY8X');
+  </script>
+</head>
+
+<body data-barba="wrapper" data-site-color="204, 206, 69" id="homepage">
+  <!-- Loader -->
+  <div class="loader">
+    <div class="loaderContainer">
+      <div class="loader-text">VIRTUAL SPACE ++++ 2025</div>
+      <div class="loader-signature">
+        <img src="nadja-potpis.png" alt="Signature" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Barba container -->
+  <div data-barba="container" data-barba-namespace="homepage">
+
+    <div id="headerContainer">
+      <p>
+        <date-display></date-display> and you are viewing Nadja Kurtalic's virtual space.
+      <p>
+      <p id="headerLine"></p>
+      <button id="infoButton">contact</button>
+    </div>
+
+    <div id="introduction" class="centered-list"><ul><li>specializes in publication design, graphic design, brand identity & marketing.</li><li>is keen on funky mags, hand built objects, all things art, accessories and respect.</li></ul></div>
+
+    <div class="projects">
+            <div class="project 1">
+        <div class="projectLabelNum">01</div>
+
+        <div class="projectLabelContainer">
+                    <a class="projectView" href="publication-slavija.html">view</a>
+          
+          <div class="projectMeta">
+            <span style="white-space: nowrap;">
+              <span class="projectLabel">CREATIVE & ART DIRECTION, PR, VISUAL IDENTITY: "SLAVIJA"</span>
+              <span class="projectLabel desktop" style="margin-left: 40px;">SEPTEMBER 2025</span>
+              <span class="projectLabel slidenum" style="margin-left: 40px;">01/05</span>
+            </span>
+            <br />
+            <span class="projectLabel desktop">THEMED PARTY AT AFTR RESTAURANT</span>
+          </div>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="carouselArea relative shortened"
+        data-project-number="0">
+        <div class="carouselContainer 1">
+                                 <div class="images slide" id="">
+               <picture class="slide-content" style="aspect-ratio: 1.5">
+                 <img class="slide-content" src="media/pages/publication-slavija/cover.jpg" alt="Cover" />
+               </picture>
+             </div>
+
+                                 <div class="images slide" id="">
+               <picture class="slide-content" style="aspect-ratio: 1.5">
+                 <img class="slide-content" src="media/pages/publication-slavija/text.jpg" alt="Text" />
+               </picture>
+             </div>
+
+                                 <div class="images slide" id="">
+               <picture class="slide-content" style="aspect-ratio: 1.5">
+                 <img class="slide-content" src="media/pages/publication-slavija/2-3.jpg" alt="Pages 2-3" />
+               </picture>
+             </div>
+
+                                 <div class="images slide" id="">
+               <picture class="slide-content" style="aspect-ratio: 1.5">
+                 <img class="slide-content" src="media/pages/publication-slavija/4-5.jpg" alt="Pages 4-5" />
+               </picture>
+             </div>
+
+                                 <div class="images slide" id="">
+               <picture class="slide-content" style="aspect-ratio: 1.5">
+                 <img class="slide-content" src="media/pages/publication-slavija/6-7.jpg" alt="Pages 6-7" />
+               </picture>
+             </div>
+        </div>
+
+        <div class="leftButton 1"></div>
+        <div class="rightButton 1"></div>
+      </div>
+    </div>
+
+    <div id="info">
+      <div id="contact" class="desktop centered">
+        <a href="mailto:nadjakurtalic@gmail.com" target="_blank">nadjakurtalic@gmail.com</a> —  <a href="https://www.instagram.com/beznadje/" target="_blank">@beznadje</a>      </div>
+      <ul id="mobile-contact" class="centered">
+                <li><a href="mailto:nadjakurtalic@gmail.com" target="_blank">nadjakurtalic@gmail.com</a></li>
+                <li><a href="https://www.instagram.com/beznadje/" target="_blank">@beznadje</a></li>
+              </ul>
+    </div>
+
+    <p id="footer"></p>
+
+    <div class="marquee" id="mqr">
+      <span style="white-space:nowrap;" id="mqr-text">
+        <p>
+          <span>&nbsp;&nbsp;</span>
+          <date-display></date-display> and stefanietam.com was last updated on June 12, 2025.
+          Carter Duong and Lorraine Li developed this virtual space.
+        </p>
+      </span>
+    </div>
+    <div class="marquee-spacer">
+      <br />
+    </div>
+
+    <div id="bottom-nav" data-num-projects="1">
+  <nav id="project-buttons">
+    <button id="prev">...</button>
+    <ul>
+                  <li style="position: relative;">
+        <button>
+          <!-- Invisible hover area -->
+          <span class="num hnum">01</span>
+          <!-- Num/title -->
+          <span class="num">01</span>
+          <span class="title">SLAVIJA</span>
+        </button>
+      </li>
+                </ul>
+    <button id="next">...</button>
+  </nav>
+
+  <button id="btt-button">top↑</button>
+</div>    <!-- Load just the first shuffled image, cycle through the remaining images on *exit* of the screensaver -->
+<div id="screensaver" data-num-images="6">
+      <div class="ss-container ">
+    <div class="ss-caption">
+      <p>
+        <date-display></date-display> and you are resting in Nadja Kurtalic's virtual space.
+      </p>
+      <p>Two swimmers perch on a boulder in the middle of the Yuba River. Sierra Nevada Mountains, California. August 3, 2019.</p>      <br />
+      <br />
+      <p>
+        Click anywhere to continue.
+      </p>
+    </div>
+    <!-- Image -->
+    <picture class="ss-picture" style="aspect-ratio: 1.3333333333333">
+      <source srcset="https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4-2000x.webp 2000w, https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4-1400x.webp 1400w, https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4-1200x.webp 1200w, https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4-800x.webp 800w" sizes="(max-width: 1000px) 100vw, 1100px" alt=""
+        type="image/webp" />
+      <img class="ss-content" srcset="https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4-2000x.jpg 2000w, https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4-1400x.jpg 1400w, https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4-1200x.jpg 1200w, https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4-800x.jpg 800w" sizes="(max-width: 1000px) 100vw, 1100px"
+        src="https://stefanietam.com/media/site/1a7e8b07ba-1691599290/stefanietam-screensaver-4.jpg"
+        alt="" />
+    </picture>
+  </div>
+      <div class="ss-container hidden">
+    <div class="ss-caption">
+      <p>
+        <date-display></date-display> and you are resting in Nadja Kurtalic's virtual space.
+      </p>
+      <p>Invasive mustard covers a hill off of the Pacific Coast Highway. Malibu, California. April 2, 2019.</p>      <br />
+      <br />
+      <p>
+        Click anywhere to continue.
+      </p>
+    </div>
+    <!-- Image -->
+    <picture class="ss-picture" style="aspect-ratio: 1.3333333333333">
+      <source data-srcset="https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1-2000x.webp 2000w, https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1-1400x.webp 1400w, https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1-1200x.webp 1200w, https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1-800x.webp 800w" sizes="(max-width: 1000px) 100vw, 1100px" alt=""
+        type="image/webp" />
+      <img class="ss-content" data-srcset="https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1-2000x.jpg 2000w, https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1-1400x.jpg 1400w, https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1-1200x.jpg 1200w, https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1-800x.jpg 800w" sizes="(max-width: 1000px) 100vw, 1100px"
+        data-src="https://stefanietam.com/media/site/4d670ba9b4-1691599290/stefanietam-screensaver-1.jpg"
+        alt="" />
+    </picture>
+  </div>
+      <div class="ss-container hidden">
+    <div class="ss-caption">
+      <p>
+        <date-display></date-display> and you are resting in Nadja Kurtalic's virtual space.
+      </p>
+      <p>Clouds visible from ST's apartment window fill the sky. Los Angeles, California. May 16, 2019.</p>      <br />
+      <br />
+      <p>
+        Click anywhere to continue.
+      </p>
+    </div>
+    <!-- Image -->
+    <picture class="ss-picture" style="aspect-ratio: 1.3333333333333">
+      <source data-srcset="https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2-2000x.webp 2000w, https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2-1400x.webp 1400w, https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2-1200x.webp 1200w, https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2-800x.webp 800w" sizes="(max-width: 1000px) 100vw, 1100px" alt=""
+        type="image/webp" />
+      <img class="ss-content" data-srcset="https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2-2000x.jpg 2000w, https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2-1400x.jpg 1400w, https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2-1200x.jpg 1200w, https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2-800x.jpg 800w" sizes="(max-width: 1000px) 100vw, 1100px"
+        data-src="https://stefanietam.com/media/site/1276324b26-1691599289/stefanietam-screensaver-2.jpg"
+        alt="" />
+    </picture>
+  </div>
+      <div class="ss-container hidden">
+    <div class="ss-caption">
+      <p>
+        <date-display></date-display> and you are resting in Nadja Kurtalic's virtual space.
+      </p>
+      <p>A sunset visible from ST's apartment balcony colors the sky pink-orange. Brooklyn, New York. October 19, 2022.</p>      <br />
+      <br />
+      <p>
+        Click anywhere to continue.
+      </p>
+    </div>
+    <!-- Image -->
+    <picture class="ss-picture" style="aspect-ratio: 1.3333333333333">
+      <source data-srcset="https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5-2000x.webp 2000w, https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5-1400x.webp 1400w, https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5-1200x.webp 1200w, https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5-800x.webp 800w" sizes="(max-width: 1000px) 100vw, 1100px" alt=""
+        type="image/webp" />
+      <img class="ss-content" data-srcset="https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5-2000x.jpg 2000w, https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5-1400x.jpg 1400w, https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5-1200x.jpg 1200w, https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5-800x.jpg 800w" sizes="(max-width: 1000px) 100vw, 1100px"
+        data-src="https://stefanietam.com/media/site/691e20ce7c-1691599289/stefanietam-screensaver-5.jpg"
+        alt="" />
+    </picture>
+  </div>
+      <div class="ss-container hidden">
+    <div class="ss-caption">
+      <p>
+        <date-display></date-display> and you are resting in Nadja Kurtalic's virtual space.
+      </p>
+      <p>Snow begins to melt along the Reykjadalur thermal river trail. Hveragerði, Iceland. April 13, 2022.</p>      <br />
+      <br />
+      <p>
+        Click anywhere to continue.
+      </p>
+    </div>
+    <!-- Image -->
+    <picture class="ss-picture" style="aspect-ratio: 1.3333333333333">
+      <source data-srcset="https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3-2000x.webp 2000w, https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3-1400x.webp 1400w, https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3-1200x.webp 1200w, https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3-800x.webp 800w" sizes="(max-width: 1000px) 100vw, 1100px" alt=""
+        type="image/webp" />
+      <img class="ss-content" data-srcset="https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3-2000x.jpg 2000w, https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3-1400x.jpg 1400w, https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3-1200x.jpg 1200w, https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3-800x.jpg 800w" sizes="(max-width: 1000px) 100vw, 1100px"
+        data-src="https://stefanietam.com/media/site/29aea664d8-1691599290/stefanietam-screensaver-3.jpg"
+        alt="" />
+    </picture>
+  </div>
+      <div class="ss-container hidden">
+    <div class="ss-caption">
+      <p>
+        <date-display></date-display> and you are resting in Nadja Kurtalic's virtual space.
+      </p>
+      <p>Moss covers an expanse of boulders in a field of lava. Eldhraun, Iceland. April 19, 2022.</p>      <br />
+      <br />
+      <p>
+        Click anywhere to continue.
+      </p>
+    </div>
+    <!-- Image -->
+    <picture class="ss-picture" style="aspect-ratio: 1.3333333333333">
+      <source data-srcset="https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6-2000x.webp 2000w, https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6-1400x.webp 1400w, https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6-1200x.webp 1200w, https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6-800x.webp 800w" sizes="(max-width: 1000px) 100vw, 1100px" alt=""
+        type="image/webp" />
+      <img class="ss-content" data-srcset="https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6-2000x.jpg 2000w, https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6-1400x.jpg 1400w, https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6-1200x.jpg 1200w, https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6-800x.jpg 800w" sizes="(max-width: 1000px) 100vw, 1100px"
+        data-src="https://stefanietam.com/media/site/652e5426d3-1691599289/stefanietam-screensaver-6.jpg"
+        alt="" />
+    </picture>
+  </div>
+    </div>  </div>
+
+  <script src="assets/js/bottomnav.js"></script>
+</body>
+</html>

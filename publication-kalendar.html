@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nadja Kurtalic's portfolio website" />
+    <title>CALENDAR DESIGN SELF DIRECTED - Nadja Kurtalic</title>
+
+    <!-- Site color -->
+    <style>
+      html {
+        --siteColor: rgb(204, 206, 69);
+        --siteColorTinted: rgba(204, 206, 69, 0.5);
+      }
+    </style>
+
+    <!-- Assets -->
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <script src="assets/js/fontfaceobserver.js"></script>
+    <script src="assets/js/components/DateDisplay.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/barba.js"></script>
+    <script src="assets/js/loader.js"></script>
+    <script src="assets/js/projectcarousel.js"></script>
+    <script src="assets/js/marquee.js"></script>
+    <script src="assets/js/screensaver.js"></script>
+    <script src="assets/js/smoothscroll.js"></script>
+    <script src="assets/js/app.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JT0G06KY8X"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-JT0G06KY8X");
+    </script>
+  </head>
+
+  <body data-barba="wrapper" data-site-color="204, 206, 69">
+    <!-- Loader -->
+    <div class="loader">
+      <div class="loaderContainer">
+        <div class="loader-text">VIRTUAL SPACE ++++ 2025</div>
+        <div class="loader-signature">
+          <img src="nadja-potpis.png" alt="Signature" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Barba container -->
+    <div
+      data-barba="container"
+      data-barba-namespace="project"
+      data-project-title="CALENDAR DESIGN SELF DIRECTED"
+    >
+      <div class="tinted-bg">
+        <div id="headerContainer">
+          <p>
+            <date-display></date-display> and you are viewing Nadja Kurtalic's
+            virtual space.
+          </p>
+
+          <p></p>
+          <p id="headerLine"></p>
+          <a href="index.html" class="projectView">back</a>
+        </div>
+
+        <div>
+          <div class="projectLabelNum">03</div>
+          <div class="projectLabelContainer">
+            <div class="projectMeta">
+              <div class="projectMetaRow">
+                <div class="projectMetaLeft">
+                  <span class="projectLabel projectTitle"
+                    >CALENDAR DESIGN SELF DIRECTED</span
+                  >
+                  <span class="projectLabel desktop projectDate"
+                    >OCTOBER 2025</span
+                  >
+                  <span class="projectLabel slidenum projectCounter"
+                    >01/07</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gridContainer">
+          <picture class="grid-item" data-index="1">
+            <img
+              src="media/pages/kalendar-mockup/mockup kalendar final -01.jpg"
+              alt="Mockup 01"
+            />
+          </picture>
+          <picture class="grid-item" data-index="2">
+            <img
+              src="media/pages/kalendar-mockup/mockup kalendar final -02.jpg"
+              alt="Mockup 02"
+            />
+          </picture>
+          <picture class="grid-item" data-index="3">
+            <img
+              src="media/pages/kalendar-mockup/mockup kalendar final -03.jpg"
+              alt="Mockup 03"
+            />
+          </picture>
+          <picture class="grid-item" data-index="4">
+            <img
+              src="media/pages/kalendar-mockup/mockup kalendar final -04.jpg"
+              alt="Mockup 04"
+            />
+          </picture>
+          <picture class="grid-item" data-index="5">
+            <img
+              src="media/pages/kalendar-mockup/mockup kalendar final -05.jpg"
+              alt="Mockup 05"
+            />
+          </picture>
+          <picture class="grid-item" data-index="6">
+            <img
+              src="media/pages/kalendar-mockup/mockup kalendar final -06.jpg"
+              alt="Mockup 06"
+            />
+          </picture>
+          <picture class="grid-item" data-index="7">
+            <img
+              src="media/pages/kalendar-mockup/mockup kalendar final -07.jpg"
+              alt="Mockup 07"
+            />
+          </picture>
+        </div>
+
+        <p id="footer"></p>
+
+        <div class="marquee" id="mqr">
+          <span style="white-space: nowrap" id="mqr-text">
+            <p>
+              <span>&nbsp;&nbsp;</span>
+              <date-display></date-display> and you are viewing CALENDAR DESIGN
+              SELF DIRECTED in Nadja Kurtalic's virtual space.
+            </p>
+          </span>
+        </div>
+        <div class="marquee-spacer">
+          <br />
+        </div>
+
+        <button id="btt-button">top↑</button>
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+      <div class="tinted-bg">
+        <div id="headerContainer">
+          <p>
+            <date-display></date-display> and you are viewing Nadja Kurtalic's
+            virtual space.
+          </p>
+
+          <p></p>
+          <p id="headerLine"></p>
+          <button id="exit">exit</button>
+        </div>
+
+        <div>
+          <div class="projectLabelNum">03</div>
+          <div class="projectLabelContainer">
+            <div class="projectMeta">
+              <div class="projectMetaRow">
+                <div class="projectMetaLeft">
+                  <span class="projectLabel projectTitle"
+                    >CALENDAR DESIGN SELF DIRECTED</span
+                  >
+                  <span class="projectLabel desktop projectDate"
+                    >OCTOBER 2025</span
+                  >
+                  <span class="projectLabel slidenum projectCounter"
+                    >01/07</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carouselArea relative">
+          <div class="carouselContainer">
+            <div
+              class="images slide"
+              id="slide-1"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -01.png"
+                  alt="Mockup 01"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-2"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -02.png"
+                  alt="Mockup 02"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-3"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -03.png"
+                  alt="Mockup 03"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-4"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -04.png"
+                  alt="Mockup 04"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-5"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -05.png"
+                  alt="Mockup 05"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-6"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -06.png"
+                  alt="Mockup 06"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-7"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -07.png"
+                  alt="Mockup 07"
+                />
+              </picture>
+            </div>
+          </div>
+
+          <div class="leftButton"></div>
+          <div class="rightButton"></div>
+        </div>
+
+        <div class="marquee" id="lb-mqr">
+          <span style="white-space: nowrap" id="lb-mqr-text">
+            <p>
+              <span>&nbsp;&nbsp;</span>
+              <date-display></date-display> and you are viewing CALENDAR DESIGN
+              SELF DIRECTED in Nadja Kurtalic's virtual space.
+            </p>
+          </span>
+        </div>
+        <div class="marquee-spacer">
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/bottomnav.js"></script>
+  </body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nadja Kurtalic's portfolio website" />
+    <title>
+      CREATIVE & ART DIRECTION: "GABAGOOL NIGHT" AT AFTR RESTAURANT - Nadja
+      Kurtalic
+    </title>
+
+    <!-- Site color -->
+    <style>
+      html {
+        --siteColor: rgb(204, 206, 69);
+        --siteColorTinted: rgba(204, 206, 69, 0.5);
+      }
+    </style>
+
+    <!-- Assets -->
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <script src="assets/js/fontfaceobserver.js"></script>
+    <script src="assets/js/components/DateDisplay.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/barba.js"></script>
+    <script src="assets/js/loader.js"></script>
+    <script src="assets/js/projectcarousel.js"></script>
+    <script src="assets/js/marquee.js"></script>
+    <script src="assets/js/screensaver.js"></script>
+    <script src="assets/js/smoothscroll.js"></script>
+    <script src="assets/js/app.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JT0G06KY8X"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-JT0G06KY8X");
+    </script>
+  </head>
+
+  <body data-barba="wrapper" data-site-color="204, 206, 69">
+    <!-- Loader -->
+    <div class="loader">
+      <div class="loaderContainer">
+        <div class="loader-text">VIRTUAL SPACE ++++ 2025</div>
+        <div class="loader-signature">
+          <img src="nadja-potpis.png" alt="Signature" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Barba container -->
+    <div
+      data-barba="container"
+      data-barba-namespace="project"
+      data-project-title='CREATIVE & ART DIRECTION: "GABAGOOL NIGHT" AT AFTR RESTAURANT'
+    >
+      <div class="tinted-bg">
+        <div id="headerContainer">
+          <p>
+            <date-display></date-display> and you are viewing Nadja Kurtalic's
+            virtual space.
+          </p>
+
+          <p></p>
+          <p id="headerLine"></p>
+          <a href="index.html" class="projectView">back</a>
+        </div>
+
+        <div>
+          <div class="projectLabelNum">02</div>
+          <div class="projectLabelContainer">
+            <div class="projectMeta">
+              <div class="projectMetaRow">
+                <div class="projectMetaLeft">
+                  <span class="projectLabel projectTitle"
+                    >CREATIVE & ART DIRECTION: "GABAGOOL NIGHT" AT AFTR
+                    RESTAURANT</span
+                  >
+                  <span class="projectLabel desktop projectDate"
+                    >AUGUST 2025</span
+                  >
+                  <span class="projectLabel slidenum projectCounter"
+                    >01/09</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="projectText">
+          <p>
+            "Gabagool night" is a mobster themed party at the well known
+            Michelin bistro "AFTR" in late August '25.
+          </p>
+        </div>
+
+        <div class="gridContainer">
+          <picture class="grid-item" data-index="1">
+            <img src="media/pages/publication-gabagool/cover.jpg" alt="Cover" />
+          </picture>
+          <picture class="grid-item" data-index="2">
+            <img
+              src="media/pages/publication-gabagool/2-3.jpg"
+              alt="Pages 2-3"
+            />
+          </picture>
+          <picture class="grid-item" data-index="3">
+            <img
+              src="media/pages/publication-gabagool/4-5.jpg"
+              alt="Pages 4-5"
+            />
+          </picture>
+          <picture class="grid-item" data-index="4">
+            <img
+              src="media/pages/publication-gabagool/6-7.jpg"
+              alt="Pages 6-7"
+            />
+          </picture>
+          <picture class="grid-item" data-index="5">
+            <img
+              src="media/pages/publication-gabagool/8-9.jpg"
+              alt="Pages 8-9"
+            />
+          </picture>
+          <picture class="grid-item" data-index="6">
+            <img
+              src="media/pages/publication-gabagool/10-11.jpg"
+              alt="Pages 10-11"
+            />
+          </picture>
+          <picture class="grid-item" data-index="7">
+            <img
+              src="media/pages/publication-gabagool/12-13.jpg"
+              alt="Pages 12-13"
+            />
+          </picture>
+          <picture class="grid-item" data-index="8">
+            <img
+              src="media/pages/publication-gabagool/14-15.jpg"
+              alt="Pages 14-15"
+            />
+          </picture>
+          <picture class="grid-item" data-index="9">
+            <img
+              src="media/pages/publication-gabagool/16-17.jpg"
+              alt="Pages 16-17"
+            />
+          </picture>
+        </div>
+
+        <div class="projectText">
+          <p>
+            NK led the creative direction and art direction, while also serving
+            as the photographer and graphic designer, developing the campaign's
+            visual identity and overall aesthetic concept.
+          </p>
+        </div>
+
+        <p id="footer"></p>
+
+        <div class="marquee" id="mqr">
+          <span style="white-space: nowrap" id="mqr-text">
+            <p>
+              <span>&nbsp;&nbsp;</span>
+              <date-display></date-display> and you are viewing CREATIVE & ART
+              DIRECTION: "GABAGOOL NIGHT" AT AFTR RESTAURANT in Nadja Kurtalic's
+              virtual space.
+            </p>
+          </span>
+        </div>
+        <div class="marquee-spacer">
+          <br />
+        </div>
+
+        <button id="btt-button">top↑</button>
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+      <div class="tinted-bg">
+        <div id="headerContainer">
+          <p>
+            <date-display></date-display> and you are viewing Nadja Kurtalic's
+            virtual space.
+          </p>
+
+          <p></p>
+          <p id="headerLine"></p>
+          <button id="exit">exit</button>
+        </div>
+
+        <div>
+          <div class="projectLabelNum">02</div>
+          <div class="projectLabelContainer">
+            <div class="projectMeta">
+              <div class="projectMetaRow">
+                <div class="projectMetaLeft">
+                  <span class="projectLabel projectTitle"
+                    >CREATIVE & ART DIRECTION: "GABAGOOL NIGHT" AT AFTR
+                    RESTAURANT</span
+                  >
+                  <span class="projectLabel desktop projectDate"
+                    >AUGUST 2025</span
+                  >
+                  <span class="projectLabel slidenum projectCounter"
+                    >01/09</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carouselArea relative">
+          <div class="carouselContainer">
+            <div
+              class="images slide"
+              id="slide-1"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/cover.jpg"
+                  alt="Cover"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-2"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/2-3.jpg"
+                  alt="Pages 2-3"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-3"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/4-5.jpg"
+                  alt="Pages 4-5"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-4"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/6-7.jpg"
+                  alt="Pages 6-7"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-5"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/8-9.jpg"
+                  alt="Pages 8-9"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-6"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/10-11.jpg"
+                  alt="Pages 10-11"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-7"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/12-13.jpg"
+                  alt="Pages 12-13"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-8"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/14-15.jpg"
+                  alt="Pages 14-15"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-9"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/publication-gabagool/16-17.jpg"
+                  alt="Pages 16-17"
+                />
+              </picture>
+            </div>
+          </div>
+
+          <div class="leftButton"></div>
+          <div class="rightButton"></div>
+        </div>
+
+        <div class="marquee" id="lb-mqr">
+          <span style="white-space: nowrap" id="lb-mqr-text">
+            <p>
+              <span>&nbsp;&nbsp;</span>
+              <date-display></date-display> and you are viewing CREATIVE & ART
+              DIRECTION: "GABAGOOL NIGHT" AT AFTR RESTAURANT in Nadja Kurtalic's
+              virtual space.
+            </p>
+          </span>
+        </div>
+        <div class="marquee-spacer">
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/bottomnav.js"></script>
+  </body>
+</html>

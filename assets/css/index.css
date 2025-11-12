@@ -597,10 +597,7 @@ picture.grid-item img {
   height: 100%;
   min-height: 100vh;
   min-height: -webkit-fill-available;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 0;
   box-sizing: border-box;
   visibility: hidden;
   background-color: var(--siteColor);
@@ -608,6 +605,23 @@ picture.grid-item img {
 
   clip-path: inset(0% 0% 0% 100%);
   will-change: clip-path;
+}
+
+#lightbox .tinted-bg {
+  width: 100%;
+  height: 100%;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+#lightbox #headerContainer,
+#lightbox .projectLabelContainer,
+#lightbox > .tinted-bg > div:not(.carouselArea) {
+  padding-left: 0;
+  padding-right: 0;
+  flex-shrink: 0;
 }
 
 #lightbox.open {
@@ -628,14 +642,18 @@ div[data-barba-namespace="homepage"] .carouselContainer {
 #lightbox .carouselArea {
   box-sizing: border-box;
   width: 100%;
-  height: 100%;
-  padding: calc(var(--verticalMargin) * 4) var(--horizontalMargin);
+  padding: 0;
   margin: 0;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: visible !important;
 }
 
 @media only screen and (max-width: 1000px) {
   #lightbox .carouselArea {
-    padding: calc(var(--verticalMargin) * 6) var(--horizontalMargin);
+    padding: 0;
   }
 }
 
@@ -646,23 +664,52 @@ div[data-barba-namespace="homepage"] .carouselContainer {
   position: relative;
   width: 100%;
   height: 100%;
+  flex: 1;
+  min-height: 0;
   margin: 0;
   left: 0;
   top: 0;
+  overflow: visible !important;
 }
 
-#lightbox .slide img {
-  /* center the image */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#lightbox .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible !important;
+  cursor: pointer;
+}
 
-  /* proportionally constrains the height and width by the parent elements dimensions */
+#lightbox .slide picture.slide-content {
+  /* center the picture element - remove all constraints */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: unset !important;
+  overflow: visible;
+  cursor: pointer;
+}
+
+#lightbox .slide img.slide-content {
+  /* center the image - scale to fit container */
+  position: relative;
   display: block;
   width: auto;
   height: auto;
   max-height: 100%;
   max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+  overflow: visible;
+  cursor: pointer;
 }
 
 .leftButton {
@@ -674,6 +721,11 @@ div[data-barba-namespace="homepage"] .carouselContainer {
   top: 0;
   height: 100%;
   z-index: 3;
+  pointer-events: none;
+}
+
+#lightbox .leftButton {
+  display: none;
 }
 
 div[data-barba-namespace="homepage"] .leftButton {
@@ -693,6 +745,11 @@ div[data-barba-namespace="homepage"] .leftButton:hover {
   left: 50%;
   height: 100%;
   z-index: 3;
+  pointer-events: none;
+}
+
+#lightbox .rightButton {
+  display: none;
 }
 
 div[data-barba-namespace="homepage"] .rightButton {

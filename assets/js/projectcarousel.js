@@ -1,99 +1,11 @@
 function initProjectCarousel() {
-  let turning = false;
   let transitioning = false;
-  let counter = 0;
   let carousel;
   let length;
 
-  carousel = $(`div[data-barba-namespace="project"] .carouselContainer`);
-  length = carousel[0].children.length;
-
-  // right button
-  $(`.rightButton`).click(function () {
-    if (!turning && !transitioning) {
-      turning = true;
-
-      carousel = $(`.carouselContainer`);
-
-      // load adjacent picture elements in the direction the
-      // carousel is being advanced, counter uses 1-based numbering
-      loadPictureEl(carousel[0].children[getWrappedIndex(counter + 1, length)]);
-      loadPictureEl(carousel[0].children[getWrappedIndex(counter + 2, length)]);
-
-      // outgoing el
-      let prev = carousel[0].children[counter];
-      prev.style.transition = "clip-path linear 1050ms";
-      prev.style.clipPath = "inset(0% 100% 0% 0%)";
-      prev.style.zIndex = "3";
-
-      // set index
-      counter++;
-      if (counter >= length) {
-        counter = 0;
-      }
-
-      // incoming el
-      let curr = carousel[0].children[counter];
-      curr.style.zIndex = "2";
-      curr.style.display = "";
-
-      // set slide number
-      $(".slidenum").html(pad(counter + 1) + "/" + pad(length));
-
-      // unset styles
-      setTimeout(function () {
-        turning = false;
-        prev.style.zIndex = "1";
-        prev.style.transition = "";
-        prev.style.clipPath = "";
-        curr.style.zIndex = "2";
-      }, 1050);
-    }
-  });
-
-  // left button
-  $(`.leftButton`).click(function () {
-    if (!turning && !transitioning) {
-      turning = true;
-
-      carousel = $(`.carouselContainer`);
-      length = carousel[0].children.length;
-
-      // load adjacent picture elements in the direction the
-      // carousel is being advanced, counter uses 1-based numbering
-      loadPictureEl(carousel[0].children[getWrappedIndex(counter - 1, length)]);
-      loadPictureEl(carousel[0].children[getWrappedIndex(counter - 2, length)]);
-
-      // outgoing el
-      let prev = carousel[0].children[counter];
-      prev.style.transition = "clip-path linear 1050ms";
-      prev.style.clipPath = "inset(0% 0% 0% 100%)";
-      prev.style.zIndex = "3";
-
-      // set index
-      counter--;
-      if (counter < 0) {
-        counter = length - 1;
-      }
-
-      // incoming el
-      let curr = carousel[0].children[counter];
-      curr.style.zIndex = "2";
-      curr.style.display = "";
-
-      // set slide number
-      $(".slidenum").html(pad(counter + 1) + "/" + pad(length));
-
-      // unset styles
-      setTimeout(function () {
-        turning = false;
-        prev.style.zIndex = "1";
-        prev.style.transition = "";
-        prev.style.clipPath = "";
-        curr.style.zIndex = "2";
-      }, 1050);
-    }
-  });
+  // Get carousel from lightbox (where the slides actually are)
+  carousel = $("#lightbox .carouselContainer");
+  length = carousel[0] ? carousel[0].children.length : 0;
 
   // open LB
   $(".grid-item").click(function () {
@@ -107,22 +19,21 @@ function initProjectCarousel() {
 
     var index = Number($(this).attr("data-index"));
 
-    // load the clicked picture element and the 4 adjacent picture elements
+    // Get the lightbox carousel to determine length
+    carousel = $("#lightbox .carouselContainer");
+    length = carousel[0] ? carousel[0].children.length : 0;
+
+    // load only the clicked picture element
     // index uses 1-based numbering
-    loadPictureEl($("#slide-" + index)[0]);
-    loadPictureEl($("#slide-" + getWrappedIndex(index + 1, length))[0]);
-    loadPictureEl($("#slide-" + getWrappedIndex(index + 2, length))[0]);
-    loadPictureEl($("#slide-" + getWrappedIndex(index - 1, length))[0]);
-    loadPictureEl($("#slide-" + getWrappedIndex(index - 2, length))[0]);
+    loadPictureEl($("#lightbox #slide-" + index)[0]);
 
-    // hide all slides except the clicked slide to improve performance while the lb clips in
-    $(".slide").css("display", "none");
-    $("#slide-" + index).css("display", "");
+    // hide all slides except the clicked slide
+    $("#lightbox .slide").css("display", "none");
+    $("#lightbox #slide-" + index).css("display", "");
 
-    $(".slide").css("z-index", 1);
-    $("#slide-" + index).css("z-index", 2);
-    counter = index - 1;
-    $(".slidenum").html(pad(counter + 1) + "/" + pad(length));
+    $("#lightbox .slide").css("z-index", 1);
+    $("#lightbox #slide-" + index).css("z-index", 2);
+    $("#lightbox .slidenum").html(pad(index) + "/" + pad(length));
 
     $("#lightbox").css({
       visibility: "visible",
@@ -142,8 +53,16 @@ function initProjectCarousel() {
         "clip-path": "",
       });
 
+      // Remove inline aspect-ratio style from picture elements to prevent clipping
+      $("#lightbox .slide picture.slide-content").each(function () {
+        $(this).css("aspect-ratio", "unset");
+      });
+
       unlockSite();
       transitioning = false;
+
+      // Make the slide and image clickable to exit (bind after lightbox is open)
+      $("#lightbox .slide").off("click").on("click", exitLightbox);
     }, 1050);
 
     // bind events
@@ -197,7 +116,11 @@ function initProjectCarousel() {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           const index = entry.target.dataset.index;
-          loadPictureEl(carousel[0].children[index]);
+          // Load from lightbox carousel
+          const lightboxCarousel = $("#lightbox .carouselContainer");
+          if (lightboxCarousel[0] && lightboxCarousel[0].children[index - 1]) {
+            loadPictureEl(lightboxCarousel[0].children[index - 1]);
+          }
           observer.unobserve(entry.target);
         }
       });

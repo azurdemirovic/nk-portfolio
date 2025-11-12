@@ -8,9 +8,10 @@ let fontLoaded = true;
 if (document.querySelector("#mqr")) {
   startMarquee("#mqr");
 }
-if (document.querySelector("#lb-mqr")) {
-  startMarquee("#lb-mqr");
-}
+// Lightbox marquee removed - no longer needed
+// if (document.querySelector("#lb-mqr")) {
+//   startMarquee("#lb-mqr");
+// }
 
 /**
  * Screensaver
@@ -72,7 +73,8 @@ $(document).ready(function () {
           $("#homepage").css("visibility", "hidden");
 
           startMarquee("div[data-barba-namespace='project'] #mqr");
-          startMarquee("div[data-barba-namespace='project'] #lb-mqr");
+          // Lightbox marquee removed - no longer needed
+          // startMarquee("div[data-barba-namespace='project'] #lb-mqr");
 
           // set document title
           let projectTitle = data.next.container.dataset.projectTitle;

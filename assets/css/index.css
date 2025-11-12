@@ -216,7 +216,7 @@ div[data-barba-namespace="project"] #headerContainer {
 }
 
 div[data-barba-namespace="homepage"] .project {
-  cursor: url("../../cursor.png") 8 20, auto !important;
+  cursor: url("cursor.png") 8 20, auto !important;
 }
 
 div[data-barba-namespace="homepage"] .project .projectLabel,
@@ -397,7 +397,7 @@ div[data-barba-namespace="homepage"] .slide img,
 div[data-barba-namespace="homepage"] .slide-content,
 div[data-barba-namespace="homepage"] picture.slide-content,
 div[data-barba-namespace="homepage"] img.slide-content {
-  cursor: url("../../cursor.png") 0 0, auto !important;
+  cursor: url("cursor.png") 0 0, auto !important;
 }
 
 .carouselArea {
@@ -423,7 +423,7 @@ div[data-barba-namespace="homepage"] img.slide-content {
 
 div[data-barba-namespace="homepage"] .carouselArea,
 div[data-barba-namespace="homepage"] .carouselArea.shortened {
-  cursor: url("../../cursor.png") 8 20, auto !important;
+  cursor: url("cursor.png") 8 20, auto !important;
 }
 
 .relative {
@@ -636,7 +636,7 @@ picture.grid-item img {
 }
 
 div[data-barba-namespace="homepage"] .carouselContainer {
-  cursor: url("../../cursor.png") 8 20, auto;
+  cursor: url("cursor.png") 8 20, auto;
 }
 
 #lightbox .carouselArea {
@@ -729,11 +729,12 @@ div[data-barba-namespace="homepage"] .carouselContainer {
 }
 
 div[data-barba-namespace="homepage"] .leftButton {
-  cursor: url("../../cursor.png") 8 20, auto;
+  cursor: url("cursor.png") 8 20, auto;
+  pointer-events: auto;
 }
 
 div[data-barba-namespace="homepage"] .leftButton:hover {
-  cursor: url("../../cursor-left.png") 24 20, auto;
+  cursor: url("cursor-left.png") 24 20, auto;
 }
 
 .rightButton {
@@ -753,7 +754,8 @@ div[data-barba-namespace="homepage"] .leftButton:hover {
 }
 
 div[data-barba-namespace="homepage"] .rightButton {
-  cursor: url("../../cursor.png") 8 20, auto;
+  cursor: url("cursor.png") 8 20, auto;
+  pointer-events: auto;
 }
 
 #exit,

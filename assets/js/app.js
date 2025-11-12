@@ -63,6 +63,14 @@ $(document).ready(function () {
       {
         namespace: "project",
         beforeEnter(data) {
+          // Hide loader and homepage when entering project page
+          $(".loader").css({
+            "visibility": "hidden",
+            "display": "none",
+            "z-index": "-1"
+          });
+          $("#homepage").css("visibility", "hidden");
+          
           startMarquee("div[data-barba-namespace='project'] #mqr");
           startMarquee("div[data-barba-namespace='project'] #lb-mqr");
 
@@ -105,10 +113,28 @@ $(document).ready(function () {
           const currentYPos = -1 * (document.documentElement.scrollTop || document.body.scrollTop) + "px";
           data.current.container.style.top = currentYPos;
 
+          // Hide loader if navigating to project page
+          if (data.next.namespace === "project") {
+            $(".loader").css({
+              "visibility": "hidden",
+              "display": "none",
+              "z-index": "-1"
+            });
+            $("#homepage").css("visibility", "hidden");
+            // Ensure exiting homepage container will be hidden
+            if (data.current.namespace === "homepage") {
+              data.current.container.style.zIndex = "1";
+            }
+          }
+          
           // layer containers over each other
           document.body.classList.add("transitioning");
           data.current.container.classList.add("exiting");
           data.next.container.classList.add("entering");
+          // Ensure entering container is visible
+          data.next.container.style.visibility = "visible";
+          data.next.container.style.display = "block";
+          data.next.container.style.zIndex = "11";
 
           // for navigations (push *or* pop state) into homepage,
           // align target project to the top of the viewport

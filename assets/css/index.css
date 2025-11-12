@@ -87,7 +87,12 @@ body.transitioning > .exiting {
 }
 
 body.transitioning > .entering {
-  position: static;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  visibility: visible;
+  z-index: 11;
 }
 
 div[data-barba="container"] {
@@ -234,6 +239,54 @@ div[data-barba-namespace="project"] #headerContainer {
   margin-bottom: var(--lineHeight);
 }
 
+.projectMetaRow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.projectMetaRow:first-child {
+  margin-bottom: 0;
+}
+
+.projectMetaLeft {
+  display: flex;
+  align-items: baseline;
+  gap: 60px;
+  flex: 1 1 auto;
+}
+
+.projectTitle {
+  flex: 0 0 auto;
+  margin-right: 0;
+}
+
+.projectDate {
+  flex: 0 0 auto;
+  margin-right: 0;
+}
+
+.projectCounter {
+  flex: 0 0 auto;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.projectSubtitle {
+  margin-right: 0;
+}
+
+.projectView {
+  float: right;
+  color: black;
+  padding-bottom: 1px;
+  text-decoration: none;
+  box-sizing: content-box;
+  border-bottom: 2px solid white;
+}
+
 div[data-barba-namespace="project"] .projectMeta {
   margin-bottom: calc(var(--lineHeight) * 2);
 }
@@ -241,16 +294,6 @@ div[data-barba-namespace="project"] .projectMeta {
 #lightbox .projectLabelContainer {
   position: relative; /* need this for z-indexing */
   z-index: 10;
-}
-
-.projectView {
-  float: right;
-  color: black;
-  padding-bottom: 1px;
-
-  text-decoration: none;
-  box-sizing: content-box;
-  border-bottom: 2px solid white;
 }
 
 .projectDescriptionContainer {
@@ -304,7 +347,6 @@ div[data-barba-namespace="project"] .projectMeta {
 .slide {
   overflow: hidden;
   position: absolute;
-  object-fit: cover;
   top: 0;
   height: 100%;
   width: 100%;
@@ -327,11 +369,14 @@ div[data-barba-namespace="project"] .projectMeta {
 
 .slide img {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  width: auto;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
   z-index: 2;
 }
 
@@ -518,7 +563,8 @@ div[data-barba-namespace="project"] .projectMeta {
 picture.grid-item img {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 }
 
 /* Lightbox */

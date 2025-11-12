@@ -11,7 +11,6 @@
   padding: 0;
 }
 
-
 /* Base */
 html {
   --projNumWidth: 45px;
@@ -116,7 +115,6 @@ div[data-barba-namespace="project"] .tinted-bg {
   background-color: var(--siteColorTinted);
 }
 
-
 .pay {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 22px;
@@ -168,6 +166,10 @@ div[data-barba-namespace="project"] .tinted-bg {
   width: 556px;
 }
 
+#info #contact {
+  text-align: center;
+}
+
 #introduction {
   padding-top: 191px;
   padding-bottom: 191px;
@@ -213,6 +215,19 @@ div[data-barba-namespace="project"] #headerContainer {
   width: 100%;
 }
 
+div[data-barba-namespace="homepage"] .project {
+  cursor: url("../../cursor.png") 8 20, auto !important;
+}
+
+div[data-barba-namespace="homepage"] .project .projectLabel,
+div[data-barba-namespace="homepage"] .project .projectTitle,
+div[data-barba-namespace="homepage"] .project .projectDate,
+div[data-barba-namespace="homepage"] .project .projectCounter,
+div[data-barba-namespace="homepage"] .project .projectSubtitle,
+div[data-barba-namespace="homepage"] .project .projectMeta {
+  cursor: default !important;
+}
+
 .projectLabel {
   margin-right: 20px;
   display: inline;
@@ -221,7 +236,6 @@ div[data-barba-namespace="project"] #headerContainer {
 .projectLabel:last-of-type {
   margin-right: 0;
 }
-
 
 .projectLabelNum {
   width: var(--projNumWidth);
@@ -342,7 +356,6 @@ div[data-barba-namespace="project"] .projectMeta {
   text-indent: var(--projNumWidth);
 }
 
-
 /* CAROUSEL */
 .slide {
   overflow: hidden;
@@ -380,6 +393,13 @@ div[data-barba-namespace="project"] .projectMeta {
   z-index: 2;
 }
 
+div[data-barba-namespace="homepage"] .slide img,
+div[data-barba-namespace="homepage"] .slide-content,
+div[data-barba-namespace="homepage"] picture.slide-content,
+div[data-barba-namespace="homepage"] img.slide-content {
+  cursor: url("../../cursor.png") 0 0, auto !important;
+}
+
 .carouselArea {
   position: fixed;
 
@@ -401,10 +421,9 @@ div[data-barba-namespace="project"] .projectMeta {
   line-height: 0;
 }
 
-.carouselArea.shortened {
-  /* rounding down calc(1101px * 0.75); */
-  width: 825px;
-  max-width: calc(var(--maxContentWidth) * 0.75);
+div[data-barba-namespace="homepage"] .carouselArea,
+div[data-barba-namespace="homepage"] .carouselArea.shortened {
+  cursor: url("../../cursor.png") 8 20, auto !important;
 }
 
 .relative {
@@ -429,13 +448,15 @@ div[data-barba-namespace="project"] .projectMeta {
   color: white;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 32px;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: 1px;
   word-spacing: 2px;
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
   z-index: 2;
+  -webkit-text-stroke-width: 0 !important;
+  -webkit-text-stroke-color: transparent !important;
 }
 
 .loader-signature {
@@ -600,6 +621,10 @@ picture.grid-item img {
   padding-bottom: calc(100% / 1.5);
 }
 
+div[data-barba-namespace="homepage"] .carouselContainer {
+  cursor: url("../../cursor.png") 8 20, auto;
+}
+
 #lightbox .carouselArea {
   box-sizing: border-box;
   width: 100%;
@@ -651,6 +676,14 @@ picture.grid-item img {
   z-index: 3;
 }
 
+div[data-barba-namespace="homepage"] .leftButton {
+  cursor: url("../../cursor.png") 8 20, auto;
+}
+
+div[data-barba-namespace="homepage"] .leftButton:hover {
+  cursor: url("../../cursor-left.png") 24 20, auto;
+}
+
 .rightButton {
   /* margin-top: 16px; */
   opacity: 0;
@@ -660,6 +693,10 @@ picture.grid-item img {
   left: 50%;
   height: 100%;
   z-index: 3;
+}
+
+div[data-barba-namespace="homepage"] .rightButton {
+  cursor: url("../../cursor.png") 8 20, auto;
 }
 
 #exit,
@@ -746,7 +783,6 @@ picture.grid-item img {
   display: none;
 }
 
-
 #btt-button {
   position: fixed;
   bottom: 14px;
@@ -786,7 +822,6 @@ picture.grid-item img {
   body {
     --projNumWidth: 35px;
   }
-
 
   .mobile-andmore {
     display: inline;

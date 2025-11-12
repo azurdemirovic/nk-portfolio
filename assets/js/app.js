@@ -15,7 +15,7 @@ if (document.querySelector("#lb-mqr")) {
 /**
  * Screensaver
  */
-initScreensaver();
+// initScreensaver(); // Disabled - uncomment to re-enable screensaver
 
 /**
  * Barba
@@ -65,12 +65,12 @@ $(document).ready(function () {
         beforeEnter(data) {
           // Hide loader and homepage when entering project page
           $(".loader").css({
-            "visibility": "hidden",
-            "display": "none",
-            "z-index": "-1"
+            visibility: "hidden",
+            display: "none",
+            "z-index": "-1",
           });
           $("#homepage").css("visibility", "hidden");
-          
+
           startMarquee("div[data-barba-namespace='project'] #mqr");
           startMarquee("div[data-barba-namespace='project'] #lb-mqr");
 
@@ -110,15 +110,18 @@ $(document).ready(function () {
         beforeEnter(data) {
           // save the scroll position (Y) of current container, wherever it's at, before we
           // start positining containers
-          const currentYPos = -1 * (document.documentElement.scrollTop || document.body.scrollTop) + "px";
+          const currentYPos =
+            -1 *
+              (document.documentElement.scrollTop || document.body.scrollTop) +
+            "px";
           data.current.container.style.top = currentYPos;
 
           // Hide loader if navigating to project page
           if (data.next.namespace === "project") {
             $(".loader").css({
-              "visibility": "hidden",
-              "display": "none",
-              "z-index": "-1"
+              visibility: "hidden",
+              display: "none",
+              "z-index": "-1",
             });
             $("#homepage").css("visibility", "hidden");
             // Ensure exiting homepage container will be hidden
@@ -126,7 +129,7 @@ $(document).ready(function () {
               data.current.container.style.zIndex = "1";
             }
           }
-          
+
           // layer containers over each other
           document.body.classList.add("transitioning");
           data.current.container.classList.add("exiting");
@@ -141,18 +144,25 @@ $(document).ready(function () {
           if (data.next.namespace === "homepage") {
             initLoader();
             const targetProjHref = data.current.url.href;
-            const prevProjectEl = data.next.container.querySelector(`a[href="${targetProjHref}"]`);
+            const prevProjectEl = data.next.container.querySelector(
+              `a[href="${targetProjHref}"]`
+            );
 
             if (prevProjectEl) {
               const targetEl = prevProjectEl.parentElement;
 
-              targetProjY = targetEl.getBoundingClientRect().top + document.documentElement.scrollTop - 14 + 0.3; // 14px top margin, 0.3 prevents 1px jitter
+              targetProjY =
+                targetEl.getBoundingClientRect().top +
+                document.documentElement.scrollTop -
+                14 +
+                0.3; // 14px top margin, 0.3 prevents 1px jitter
             } else {
               // scroll to top in the event we're coming from an unlisted page
               targetProjY = 0;
             }
 
-            document.documentElement.scrollTop = document.body.scrollTop = targetProjY;
+            document.documentElement.scrollTop = document.body.scrollTop =
+              targetProjY;
           }
           // for vanilla navs, just go to the top of the next page
           else {

@@ -121,6 +121,23 @@ div[data-barba-namespace="project"] .tinted-bg {
   background-color: var(--siteColorTinted);
 }
 
+/* Project-specific background colors */
+div[data-project-color="#cf6aa8"] .tinted-bg {
+  background-color: #cf6aa8;
+}
+
+div[data-project-color="#b8a4c1"] .tinted-bg {
+  background-color: #b8a4c1;
+}
+
+div[data-project-color="#2a798b"] .tinted-bg {
+  background-color: #2a798b;
+}
+
+div[data-project-color="#d5d7d9"] .tinted-bg {
+  background-color: #b8babc;
+}
+
 .pay {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 22px;
@@ -615,6 +632,7 @@ picture.grid-item {
   visibility: hidden;
   background-color: var(--siteColor);
   z-index: 10;
+  transition: background-color 0.3s ease;
 
   clip-path: inset(0% 0% 0% 100%);
   will-change: clip-path;

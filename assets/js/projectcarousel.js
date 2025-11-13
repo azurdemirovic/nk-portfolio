@@ -1,3 +1,27 @@
+// Function to darken a hex color
+function darkenColor(hex, amount) {
+  // Remove # if present
+  hex = hex.replace("#", "");
+
+  // Convert to RGB
+  const r = parseInt(hex.substr(0, 2), 16);
+  const g = parseInt(hex.substr(2, 2), 16);
+  const b = parseInt(hex.substr(4, 2), 16);
+
+  // Darken each component
+  const newR = Math.max(0, Math.floor(r * (1 - amount)));
+  const newG = Math.max(0, Math.floor(g * (1 - amount)));
+  const newB = Math.max(0, Math.floor(b * (1 - amount)));
+
+  // Convert back to hex
+  return (
+    "#" +
+    ("0" + newR.toString(16)).substr(-2) +
+    ("0" + newG.toString(16)).substr(-2) +
+    ("0" + newB.toString(16)).substr(-2)
+  );
+}
+
 function initProjectCarousel() {
   let transitioning = false;
   let carousel;
@@ -67,6 +91,18 @@ function initProjectCarousel() {
     // Get the lightbox carousel to determine length
     carousel = $("#lightbox .carouselContainer");
     length = carousel[0] ? carousel[0].children.length : 0;
+
+    // Get project color and set lightbox background to darker shade
+    const projectContainer = $("div[data-barba-namespace='project']");
+    const projectColor = projectContainer.attr("data-project-color");
+    if (projectColor) {
+      // Use darker shade for lightbox - 30% for Desiderata, 20% for others
+      const darkenAmount = projectColor === "#d5d7d9" ? 0.35 : 0.2;
+      // For Desiderata, use the already-darkened base color (#b8babc) and darken it further
+      const baseColor = projectColor === "#d5d7d9" ? "#b8babc" : projectColor;
+      const darkerColor = darkenColor(baseColor, darkenAmount);
+      $("#lightbox").css("background-color", darkerColor);
+    }
 
     // load only the clicked picture element
     // index uses 1-based numbering
@@ -184,6 +220,9 @@ function initProjectCarousel() {
 
       $("#lightbox").removeClass("open");
       $("body").css("overflow", "auto");
+
+      // Reset lightbox background color when closing
+      $("#lightbox").css("background-color", "");
 
       transitioning = false;
       unlockSite();

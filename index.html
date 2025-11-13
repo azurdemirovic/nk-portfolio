@@ -6,6 +6,11 @@
     <meta name="description" content="Nadja Kurtalic's portfolio website" />
     <title>Nadja Kurtalic</title>
 
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
     <!-- Site color -->
     <style>
       html {
@@ -13,6 +18,19 @@
         --siteColorTinted: rgba(204, 206, 69, 0.5);
       }
     </style>
+
+    <!-- Hide loader immediately if already shown (prevents flash) -->
+    <script>
+      (function () {
+        if (sessionStorage.getItem("loaderShown") === "true") {
+          // Inject CSS immediately to hide loader before page renders
+          var style = document.createElement("style");
+          style.textContent =
+            ".loader { background-color: transparent !important; visibility: hidden !important; display: none !important; z-index: -1 !important; }";
+          document.head.appendChild(style);
+        }
+      })();
+    </script>
 
     <!-- Assets -->
     <link href="assets/css/index.css" rel="stylesheet" />

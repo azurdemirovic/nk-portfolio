@@ -73,6 +73,12 @@ body.transitioning {
   pointer-events: none;
 }
 
+/* Hide loader background during transitions to prevent flash */
+body.transitioning .loader {
+  background-color: transparent !important;
+  opacity: 0 !important;
+}
+
 body.transitioning > div {
   position: absolute;
 }
@@ -154,16 +160,10 @@ div[data-barba-namespace="project"] .tinted-bg {
   text-align: start;
 }
 
-#introduction ul li::before,
-#conclusion ul li::before {
+#introduction ul li::before {
   content: "NK";
   position: absolute;
   transform: translateX(-125%);
-}
-
-#conclusion #contact {
-  text-align: left;
-  width: 556px;
 }
 
 #info #contact {
@@ -908,13 +908,11 @@ div[data-barba-namespace="homepage"] .rightButton {
     --stWidth: 36px;
   }
 
-  #introduction,
-  #conclusion {
+  #introduction {
     width: calc(100% - var(--projNumWidth));
   }
 
-  #introduction ul li::before,
-  #conclusion ul li::before {
+  #introduction ul li::before {
     /* move it a smidge to the left */
     transform: translateX(calc(calc(var(--projNumWidth) + 1px) * -1));
   }
@@ -1020,14 +1018,6 @@ div[data-barba-namespace="homepage"] .rightButton {
 #project-buttons button .title {
   display: none;
 }
-
-/* #project-buttons button:hover .title {
-  display: unset;
-}
-
-#project-buttons button:hover .num {
-  display: none;
-} */
 
 .hnum {
   z-index: 1000;

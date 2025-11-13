@@ -38,6 +38,7 @@ function initProjectCarousel() {
   // Track touch events to prevent double-firing with click
   let touchStartTime = 0;
   let touchTarget = null;
+  let lightboxTouchStartTime = 0; // Separate tracking for lightbox navigation buttons
 
   // open LB - support both click and touch events for better device compatibility
   function openLightboxHandler(e) {
@@ -385,17 +386,23 @@ function initProjectCarousel() {
   }
 
   // Bind left/right button navigation in lightbox - support both click and touch
+  // Prevent double-firing: touchstart triggers click, so ignore click if touchstart was recent
   $(document)
     .off("click touchstart", "#lightbox .leftButton")
     .on("touchstart", "#lightbox .leftButton", function (e) {
       e.preventDefault();
       e.stopPropagation();
+      lightboxTouchStartTime = Date.now();
       navigateLightbox("prev");
     })
     .on("click", "#lightbox .leftButton", function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      navigateLightbox("prev");
+      // Only handle click if it wasn't from a touch
+      if (lightboxTouchStartTime === 0 || Date.now() - lightboxTouchStartTime > 500) {
+        e.preventDefault();
+        e.stopPropagation();
+        navigateLightbox("prev");
+      }
+      lightboxTouchStartTime = 0;
     });
 
   $(document)
@@ -403,12 +410,17 @@ function initProjectCarousel() {
     .on("touchstart", "#lightbox .rightButton", function (e) {
       e.preventDefault();
       e.stopPropagation();
+      lightboxTouchStartTime = Date.now();
       navigateLightbox("next");
     })
     .on("click", "#lightbox .rightButton", function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      navigateLightbox("next");
+      // Only handle click if it wasn't from a touch
+      if (lightboxTouchStartTime === 0 || Date.now() - lightboxTouchStartTime > 500) {
+        e.preventDefault();
+        e.stopPropagation();
+        navigateLightbox("next");
+      }
+      lightboxTouchStartTime = 0;
     });
 
   function exitLightbox() {

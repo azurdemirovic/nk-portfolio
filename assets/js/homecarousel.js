@@ -22,6 +22,9 @@ function initHomeCarousels() {
   let projectCount = document.querySelectorAll(".project").length;
   counters = Array(projectCount + 1).fill(0);
 
+  // Track touch events to prevent double-firing with click
+  let touchStartTime = 0;
+
   // carousel functionality
   var turning = false;
   for (let i = 0; i <= projectCount; i++) {
@@ -113,31 +116,43 @@ function initHomeCarousels() {
     }
 
     // right button - support both click and touch for mobile
+    // Prevent double-firing: touchstart triggers click, so ignore click if touchstart was recent
     $(`.rightButton.${i}`)
       .off("click touchstart")
       .on("touchstart", function (e) {
         e.preventDefault();
         e.stopPropagation();
+        touchStartTime = Date.now();
         handleRightClick();
       })
       .on("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        handleRightClick();
+        // Only handle click if it wasn't from a touch
+        if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
+          e.preventDefault();
+          e.stopPropagation();
+          handleRightClick();
+        }
+        touchStartTime = 0;
       });
 
     // left button - support both click and touch for mobile
+    // Prevent double-firing: touchstart triggers click, so ignore click if touchstart was recent
     $(`.leftButton.${i}`)
       .off("click touchstart")
       .on("touchstart", function (e) {
         e.preventDefault();
         e.stopPropagation();
+        touchStartTime = Date.now();
         handleLeftClick();
       })
       .on("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        handleLeftClick();
+        // Only handle click if it wasn't from a touch
+        if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
+          e.preventDefault();
+          e.stopPropagation();
+          handleLeftClick();
+        }
+        touchStartTime = 0;
       });
   }
 }

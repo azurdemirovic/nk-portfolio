@@ -53,11 +53,8 @@ function initProjectCarousel() {
       return;
     }
 
-    // Only prevent default on touch events to avoid scrolling
+    // preventDefault is already called in the event binding for touchstart
     // Don't prevent default on click events as it can interfere with some browsers
-    if (e.type === "touchstart") {
-      e.preventDefault();
-    }
     e.stopPropagation();
 
     if (transitioning) {
@@ -238,6 +235,7 @@ function initProjectCarousel() {
       "touchstart",
       "div[data-barba-namespace='project'] .grid-item",
       function (e) {
+        e.preventDefault(); // Prevent default touch behavior (scrolling, etc.)
         e.stopPropagation();
         touchStartTime = Date.now();
         touchTarget = this;
@@ -269,6 +267,7 @@ function initProjectCarousel() {
       gridItems
         .off("click touchstart")
         .on("touchstart", function (e) {
+          e.preventDefault(); // Prevent default touch behavior (scrolling, etc.)
           e.stopPropagation();
           touchStartTime = Date.now();
           touchTarget = this;

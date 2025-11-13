@@ -27,8 +27,12 @@ function initProjectCarousel() {
   let carousel;
   let length;
 
-  // Get carousel from lightbox (where the slides actually are)
-  carousel = $("#lightbox .carouselContainer");
+  // Get carousel from lightbox in the current page container (where the slides actually are)
+  // Scope to current Barba container to avoid finding lightbox from other pages
+  const currentContainer = $(
+    "div[data-barba='container'][data-barba-namespace='project']"
+  );
+  carousel = currentContainer.find("#lightbox .carouselContainer");
   length = carousel[0] ? carousel[0].children.length : 0;
 
   // Track touch events to prevent double-firing with click
@@ -88,54 +92,72 @@ function initProjectCarousel() {
       return;
     }
 
+    // Get the current page container to scope lightbox selection
+    const currentContainer = $(
+      "div[data-barba='container'][data-barba-namespace='project']"
+    );
+    const lightbox = currentContainer.find("#lightbox");
+
     // Get the lightbox carousel to determine length
-    carousel = $("#lightbox .carouselContainer");
+    carousel = lightbox.find(".carouselContainer");
     length = carousel[0] ? carousel[0].children.length : 0;
 
     // Get project color and set lightbox background to darker shade
-    const projectContainer = $("div[data-barba-namespace='project']");
-    const projectColor = projectContainer.attr("data-project-color");
+    const projectColor = currentContainer.attr("data-project-color");
     if (projectColor) {
       // Use darker shade for lightbox - 30% for Desiderata, 20% for others
       const darkenAmount = projectColor === "#d5d7d9" ? 0.35 : 0.2;
       // For Desiderata, use the already-darkened base color (#b8babc) and darken it further
       const baseColor = projectColor === "#d5d7d9" ? "#b8babc" : projectColor;
       const darkerColor = darkenColor(baseColor, darkenAmount);
-      $("#lightbox").css("background-color", darkerColor);
+      lightbox.css("background-color", darkerColor);
     }
 
     // load only the clicked picture element
     // index uses 1-based numbering
-    loadPictureEl($("#lightbox #slide-" + index)[0]);
+    const targetSlide = lightbox.find("#slide-" + index)[0];
+    if (!targetSlide) {
+      console.error("Slide not found:", index, "in lightbox");
+      transitioning = false;
+      unlockSite();
+      enableScroll();
+      return;
+    }
+    loadPictureEl(targetSlide);
 
     // hide all slides except the clicked slide
-    $("#lightbox .slide").css("display", "none");
-    $("#lightbox #slide-" + index).css("display", "");
+    lightbox.find(".slide").css("display", "none");
+    lightbox.find("#slide-" + index).css("display", "");
 
-    $("#lightbox .slide").css("z-index", 1);
-    $("#lightbox #slide-" + index).css("z-index", 2);
-    $("#lightbox .slidenum").html(pad(index) + "/" + pad(length));
+    lightbox.find(".slide").css("z-index", 1);
+    lightbox.find("#slide-" + index).css("z-index", 2);
+    lightbox.find(".slidenum").html(pad(index) + "/" + pad(length));
 
-    $("#lightbox").css({
+    lightbox.css({
       visibility: "visible",
       transition: "clip-path 1050ms linear",
     });
 
     // clip in from right
-    $("#lightbox").css({
+    lightbox.css({
       "clip-path": "inset(0% 0% 0% 0%)",
     });
 
     // prep for close + clear inline styles
     setTimeout(() => {
-      $("#lightbox").addClass("open");
-      $("#lightbox").css({
+      const currentContainer = $(
+        "div[data-barba='container'][data-barba-namespace='project']"
+      );
+      const lightbox = currentContainer.find("#lightbox");
+
+      lightbox.addClass("open");
+      lightbox.css({
         visibility: "",
         "clip-path": "",
       });
 
       // Remove inline aspect-ratio style from picture elements to prevent clipping
-      $("#lightbox .slide picture.slide-content").each(function () {
+      lightbox.find(".slide picture.slide-content").each(function () {
         $(this).css("aspect-ratio", "unset");
       });
 
@@ -143,7 +165,7 @@ function initProjectCarousel() {
       transitioning = false;
 
       // Make the slide and image clickable to exit (bind after lightbox is open)
-      $("#lightbox .slide").off("click").on("click", exitLightbox);
+      lightbox.find(".slide").off("click").on("click", exitLightbox);
     }, 1050);
 
     // bind events
@@ -196,8 +218,11 @@ function initProjectCarousel() {
     }
   }
 
-  // close LB
-  $("#exit").click(exitLightbox);
+  // close LB - scope to current page container
+  const currentContainer = $(
+    "div[data-barba='container'][data-barba-namespace='project']"
+  );
+  currentContainer.find("#exit").off("click").on("click", exitLightbox);
 
   function exitLightbox() {
     if (transitioning) {
@@ -207,22 +232,28 @@ function initProjectCarousel() {
       lockSite();
     }
 
-    $("#lightbox").css({
+    // Get the current page container to scope lightbox selection
+    const currentContainer = $(
+      "div[data-barba='container'][data-barba-namespace='project']"
+    );
+    const lightbox = currentContainer.find("#lightbox");
+
+    lightbox.css({
       "clip-path": "inset(0% 100% 0% 0%)",
     });
 
     setTimeout(() => {
-      $("#lightbox").css({
+      lightbox.css({
         visibility: "hidden",
         "clip-path": "",
         transition: "",
       });
 
-      $("#lightbox").removeClass("open");
+      lightbox.removeClass("open");
       $("body").css("overflow", "auto");
 
       // Reset lightbox background color when closing
-      $("#lightbox").css("background-color", "");
+      lightbox.css("background-color", "");
 
       transitioning = false;
       unlockSite();
@@ -240,8 +271,13 @@ function initProjectCarousel() {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           const index = entry.target.dataset.index;
-          // Load from lightbox carousel
-          const lightboxCarousel = $("#lightbox .carouselContainer");
+          // Load from lightbox carousel in current page container
+          const currentContainer = $(
+            "div[data-barba='container'][data-barba-namespace='project']"
+          );
+          const lightboxCarousel = currentContainer.find(
+            "#lightbox .carouselContainer"
+          );
           if (lightboxCarousel[0] && lightboxCarousel[0].children[index - 1]) {
             loadPictureEl(lightboxCarousel[0].children[index - 1]);
           }

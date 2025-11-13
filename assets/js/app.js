@@ -125,6 +125,12 @@ $(document).ready(function () {
               "background-color": "transparent",
             });
             $("#homepage").css("visibility", "visible");
+            // Restore body scrolling on homepage
+            $("body").css({
+              overflow: "",
+              position: "",
+              width: "",
+            });
           }
           initInfoButton();
           initHomeCarousels();
@@ -166,6 +172,19 @@ $(document).ready(function () {
             position: "fixed",
           });
           $("#homepage").css("visibility", "hidden");
+
+          // Prevent body scrolling on project pages to fix Safari URL bar issue
+          // CSS handles height with proper fallbacks, we just need to prevent overflow
+          // Use 100dvh to account for Safari URL bar
+          const viewportHeight = window.innerHeight;
+          $("body").css({
+            overflow: "hidden",
+            position: "fixed",
+            width: "100%",
+            height: viewportHeight + "px",
+            top: "0",
+            left: "0",
+          });
 
           // Ensure project container content is visible
           if (data.next.container) {

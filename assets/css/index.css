@@ -29,14 +29,32 @@ html {
   word-spacing: -1px;
   line-height: 1.09;
   -webkit-text-stroke: 0.35px black;
+  /* Prevent scrolling on project pages due to Safari URL bar */
+  height: 100%;
+  height: -webkit-fill-available;
+}
+
+/* Text selection styling - light pink */
+::selection {
+  background-color: #ffb6c1;
+  color: #000;
+}
+
+::-moz-selection {
+  background-color: #ffb6c1;
+  color: #000;
 }
 
 body {
   /* needs a position property set for `position: absolute` on #mqr to work */
   position: relative;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   background-color: var(--siteColor);
 }
+
+/* Prevent scrolling on project pages due to Safari URL bar */
+/* This will be applied via JavaScript, but CSS provides fallback */
 
 a {
   color: currentColor;
@@ -116,15 +134,41 @@ div[data-barba="container"] {
 
 div[data-barba="container"][data-barba-namespace="project"] {
   padding: 0;
+  height: 100vh;
+  height: -webkit-fill-available;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 div[data-barba-namespace="project"] .tinted-bg {
   height: 100%;
   width: 100%;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: -webkit-fill-available;
+  max-height: 100dvh;
   padding: 14px 16px;
+  padding-bottom: calc(
+    14px + 42px
+  ); /* Add space for marquee (30px height + 12px bottom) */
   box-sizing: border-box;
   background-color: var(--siteColorTinted);
+  overflow: hidden; /* Prevent scrolling - everything should fit */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure content fits within viewport on project pages */
+/* Allow content to shrink if needed to fit marquee */
+div[data-barba-namespace="project"]
+  .tinted-bg
+  > *:not(.marquee):not(.marquee-spacer) {
+  flex-shrink: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* Project-specific background colors */
@@ -285,6 +329,7 @@ div[data-barba-namespace="homepage"] .project .projectMeta {
   justify-content: space-between;
   gap: 20px;
   min-width: 0;
+  text-align: left;
 }
 
 .projectMetaRow:first-child {
@@ -301,15 +346,12 @@ div[data-barba-namespace="homepage"] .project .projectMeta {
 }
 
 .projectTitle {
-  flex: 1 1 100%;
+  flex: 0 0 auto;
   margin-right: 0;
   /* Allow title to wrap on smaller screens */
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
-  /* Force counter to appear below by taking full width */
-  width: 100%;
-  min-width: 100%;
 }
 
 .projectDate {
@@ -456,8 +498,10 @@ div[data-barba-namespace="homepage"] img.slide-content {
   line-height: 0;
 }
 
-div[data-barba-namespace="homepage"] .carouselArea,
-div[data-barba-namespace="homepage"] .carouselArea.shortened {
+div[data-barba-namespace="homepage"] .carouselArea .carouselContainer,
+div[data-barba-namespace="homepage"] .carouselArea .slide,
+div[data-barba-namespace="homepage"] .carouselArea .slide picture,
+div[data-barba-namespace="homepage"] .carouselArea .slide img {
   cursor: url("cursor.png") 8 20, auto !important;
 }
 
@@ -557,10 +601,8 @@ div[data-barba-namespace="homepage"] .carouselArea.shortened {
 }
 
 .marquee {
-  position: absolute;
-  /* bottom: -2px;  */
-  /* offset 2px bottom padding */
-  /* left: -16px; */
+  position: fixed;
+  /* Use fixed positioning to account for Safari URL bar */
   bottom: 12px;
   left: 0;
   margin: 0 auto;
@@ -572,6 +614,7 @@ div[data-barba-namespace="homepage"] .carouselArea.shortened {
   display: flex;
   align-items: center;
   white-space: nowrap;
+  z-index: 5; /* Above content but below modals */
 }
 
 .marquee p {
@@ -609,18 +652,21 @@ div[data-barba-namespace="homepage"] .carouselArea.shortened {
   line-height: 0;
 }
 
-.grid-item {
+/* Grid items on project view pages - LUPA cursor */
+div[data-barba-namespace="project"] .grid-item {
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: url("LUPA.png") 16 16, pointer !important;
   height: auto;
   width: 100%;
   /* Ensure clicks/touches work on all devices */
-  pointer-events: auto;
+  pointer-events: auto !important;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 1;
 }
 
-picture.grid-item img {
+div[data-barba-namespace="project"] picture.grid-item img {
   height: 100%;
   width: 100%;
   object-fit: contain;
@@ -630,10 +676,13 @@ picture.grid-item img {
   user-select: none;
 }
 
-picture.grid-item {
+div[data-barba-namespace="project"] picture.grid-item {
   /* Ensure the picture element itself is clickable */
-  pointer-events: auto;
+  pointer-events: auto !important;
   display: block;
+  cursor: url("LUPA.png") 16 16, pointer !important;
+  position: relative;
+  z-index: 1;
 }
 
 /* Lightbox */
@@ -676,6 +725,7 @@ picture.grid-item {
 #lightbox.open {
   visibility: visible;
   clip-path: inset(0%);
+  cursor: url("X.png") 16 16, pointer !important;
 }
 
 .carouselContainer {
@@ -751,7 +801,7 @@ div[data-barba-namespace="homepage"] .carouselContainer {
   align-items: center;
   justify-content: center;
   overflow: visible !important;
-  cursor: pointer;
+  cursor: url("X.png") 16 16, pointer !important;
   /* Enable pinch-to-zoom on touch devices */
   touch-action: pan-x pan-y pinch-zoom;
   -ms-touch-action: pan-x pan-y pinch-zoom;
@@ -767,10 +817,13 @@ div[data-barba-namespace="homepage"] .carouselContainer {
   height: 100%;
   aspect-ratio: unset !important;
   overflow: visible;
-  cursor: pointer;
+  cursor: url("X.png") 16 16, pointer !important;
   /* Enable pinch-to-zoom on touch devices */
   touch-action: pan-x pan-y pinch-zoom;
   -ms-touch-action: pan-x pan-y pinch-zoom;
+  /* Ensure picture container centers its content */
+  margin: auto;
+  align-self: center;
 }
 
 #lightbox .slide img.slide-content {
@@ -784,10 +837,13 @@ div[data-barba-namespace="homepage"] .carouselContainer {
   object-fit: contain;
   object-position: center;
   overflow: visible;
-  cursor: pointer;
+  cursor: url("X.png") 16 16, pointer !important;
   /* Enable pinch-to-zoom on touch devices */
   touch-action: pan-x pan-y pinch-zoom;
   -ms-touch-action: pan-x pan-y pinch-zoom;
+  /* Ensure image is centered */
+  margin: auto;
+  align-self: center;
 }
 
 .leftButton {
@@ -847,6 +903,9 @@ div[data-barba-namespace="homepage"] .rightButton {
   cursor: pointer;
   margin: 0;
   border-bottom: 2px solid transparent;
+  position: relative;
+  z-index: 100;
+  pointer-events: auto !important;
 }
 
 .mobileprojectDescription {
@@ -1021,7 +1080,9 @@ div[data-barba-namespace="homepage"] .rightButton {
     overflow-wrap: break-word;
     max-width: 100%;
     min-width: 0;
-    flex: 1 1 auto;
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: 100%;
   }
 
   .projectMetaLeft {
@@ -1031,12 +1092,19 @@ div[data-barba-namespace="homepage"] .rightButton {
   }
 
   .projectMeta {
-    max-width: 100%;
+    max-width: calc(100% - 60px);
     min-width: 0;
+    text-align: left;
+    margin-right: 60px;
   }
 
   .projectMetaRow {
     min-width: 0;
+    justify-content: flex-start;
+  }
+
+  .projectMetaLeft {
+    justify-content: flex-start;
   }
 
   .projectLabelContainer {
@@ -1141,6 +1209,170 @@ div[data-barba-namespace="homepage"] .rightButton {
   .loader-signature img {
     height: 70vh;
     max-width: 100vh;
+  }
+
+  /* Hide header content and project info in lightbox on mobile to maximize image space */
+  /* But keep exit button visible */
+  #lightbox.open #headerContainer p {
+    display: none !important;
+  }
+
+  #lightbox.open #headerContainer #headerLine {
+    display: none !important;
+  }
+
+  #lightbox.open .projectLabelContainer {
+    display: none !important;
+  }
+
+  /* Ensure exit button is visible and accessible - fixed position at top */
+  #lightbox.open #headerContainer {
+    position: relative !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  #lightbox.open #exit {
+    position: fixed !important;
+    top: 16px !important;
+    right: 16px !important;
+    z-index: 200 !important;
+    display: block !important;
+    background: transparent !important;
+    padding: 0 !important;
+    padding-bottom: 1px !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    color: black !important;
+    float: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    font-family: inherit !important;
+    letter-spacing: inherit !important;
+    text-decoration: none !important;
+    box-sizing: content-box !important;
+    margin: 0 !important;
+  }
+
+  /* Remove all padding from lightbox on mobile */
+  #lightbox.open .tinted-bg {
+    padding: 0 !important;
+  }
+
+  /* Ensure carousel area takes full space on mobile, but leave room for marquee */
+  #lightbox.open .carouselArea {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: calc(
+      100% - 42px
+    ) !important; /* Leave space for marquee (30px height + 12px bottom) */
+    flex: 1 1 auto !important;
+  }
+
+  /* Ensure marquee from main container is visible above lightbox on mobile */
+  /* The marquee is in the project container, not the lightbox */
+  /* When lightbox is open, make marquee appear above it */
+  #lightbox.open ~ div[data-barba="container"] .marquee,
+  body:has(#lightbox.open) div[data-barba-namespace="project"] .marquee {
+    position: fixed !important;
+    bottom: 12px !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 15 !important; /* Above lightbox (z-index 10) but below buttons (z-index 200) */
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: flex !important;
+  }
+
+  /* Fallback for browsers that don't support :has() */
+  div[data-barba-namespace="project"] .marquee {
+    z-index: 15 !important;
+  }
+
+  /* Center image perfectly in lightbox on mobile */
+  #lightbox.open .carouselContainer {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #lightbox.open .slide {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #lightbox.open .slide picture.slide-content,
+  #lightbox.open .slide img.slide-content {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Show and style left/right navigation buttons on mobile - white background, not circular */
+  #lightbox.open .leftButton,
+  #lightbox.open .rightButton {
+    display: block !important;
+    position: fixed !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    background: white !important;
+    border: none !important;
+    z-index: 200 !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding: 8px 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  #lightbox.open .leftButton {
+    left: 16px !important;
+  }
+
+  #lightbox.open .rightButton {
+    right: 16px !important;
+    left: auto !important;
+  }
+
+  /* Add arrow indicators to buttons - slightly bigger */
+  #lightbox.open .leftButton::before {
+    content: "←" !important;
+    font-size: 1.2em !important;
+    color: black !important;
+    font-weight: normal !important;
+    font-family: inherit !important;
+    letter-spacing: inherit !important;
+    line-height: inherit !important;
+  }
+
+  #lightbox.open .rightButton::before {
+    content: "→" !important;
+    font-size: 1.2em !important;
+    color: black !important;
+    font-weight: normal !important;
+    font-family: inherit !important;
+    letter-spacing: inherit !important;
+    line-height: inherit !important;
   }
 }
 

@@ -1,5 +1,5 @@
 let bottomNav = document.getElementById("bottom-nav");
-let numProjects = bottomNav.dataset.numProjects;
+let numProjects = bottomNav ? bottomNav.dataset.numProjects : 0;
 let currentPage = 0;
 let isMobile = false;
 let isTablet = false;
@@ -24,7 +24,7 @@ const setIsMobile = () => {
 
 const resetBottomNavState = () => {
   bottomNav = document.getElementById("bottom-nav");
-  numProjects = bottomNav.dataset.numProjects;
+  numProjects = bottomNav ? bottomNav.dataset.numProjects : 0;
   currentPage = 0;
   setIsMobile();
 };
@@ -36,7 +36,8 @@ const setButtonClickHandlers = () => {
   buttons.map((button, i) => {
     button.addEventListener("click", () => {
       const targetProject = projects[i];
-      const targetProjectY = targetProject.getBoundingClientRect().top + window.scrollY - 14; // 14px top margin
+      const targetProjectY =
+        targetProject.getBoundingClientRect().top + window.scrollY - 14; // 14px top margin
       isScrollingToProject = true;
 
       window.scrollTo({
@@ -59,7 +60,8 @@ const setVisibleNavButtons = () => {
 
   // show/hide prev/next buttons
   prevButton.style.display = currentPage == 0 ? "none" : "block";
-  nextButton.style.display = currentPage == Math.floor(numProjects / pageLength) ? "none" : "block";
+  nextButton.style.display =
+    currentPage == Math.floor(numProjects / pageLength) ? "none" : "block";
 
   const buttons = Array.from(document.querySelectorAll("#bottom-nav ul li"));
 
@@ -89,7 +91,8 @@ const handleBottomNavScroll = () => {
   if (!bottomNav) return;
 
   const TOP_THRESHOLD = 100;
-  const BOTTOM_THRESHOLD = document.documentElement.scrollHeight - window.innerHeight - 80;
+  const BOTTOM_THRESHOLD =
+    document.documentElement.scrollHeight - window.innerHeight - 80;
   const pastTopThreshold = window.scrollY > TOP_THRESHOLD;
   const pastBottomThreshold = window.scrollY > BOTTOM_THRESHOLD;
 
@@ -125,8 +128,12 @@ setVisibleNavButtons();
  * Initialization fn, called in app.js
  */
 const initBottomNav = () => {
-  document.querySelector("#bottom-nav #prev").addEventListener("click", decrementButtonPage);
-  document.querySelector("#bottom-nav #next").addEventListener("click", incrementButtonPage);
+  document
+    .querySelector("#bottom-nav #prev")
+    .addEventListener("click", decrementButtonPage);
+  document
+    .querySelector("#bottom-nav #next")
+    .addEventListener("click", incrementButtonPage);
   initBottomNavScroll();
   setButtonClickHandlers();
   setVisibleNavButtons();
@@ -167,7 +174,8 @@ function handleBTTScroll() {
   if (!bottomNav) return;
 
   const TOP_THRESHOLD = 100;
-  const BOTTOM_THRESHOLD = document.documentElement.scrollHeight - window.innerHeight - 80;
+  const BOTTOM_THRESHOLD =
+    document.documentElement.scrollHeight - window.innerHeight - 80;
   const pastTopThreshold = window.scrollY > TOP_THRESHOLD;
   const pastBottomThreshold = window.scrollY > BOTTOM_THRESHOLD;
 

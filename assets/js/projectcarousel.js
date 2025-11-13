@@ -26,13 +26,13 @@ function initProjectCarousel() {
   let transitioning = false;
   let carousel;
   let length;
+  // Lightbox navigation state
+  let currentLightboxIndex = 1;
+  let lightboxLength = 0;
 
-  // Get carousel from lightbox in the current page container (where the slides actually are)
-  // Scope to current Barba container to avoid finding lightbox from other pages
-  const currentContainer = $(
-    "div[data-barba='container'][data-barba-namespace='project']"
-  );
-  carousel = currentContainer.find("#lightbox .carouselContainer");
+  // Get carousel from lightbox (where the slides actually are)
+  // Lightbox is a sibling of the container, not a child, so use direct selector
+  carousel = $("#lightbox .carouselContainer");
   length = carousel[0] ? carousel[0].children.length : 0;
 
   // Track touch events to prevent double-firing with click
@@ -92,11 +92,21 @@ function initProjectCarousel() {
       return;
     }
 
-    // Get the current page container to scope lightbox selection
+    // Get the current page container to get project color
     const currentContainer = $(
       "div[data-barba='container'][data-barba-namespace='project']"
     );
-    const lightbox = currentContainer.find("#lightbox");
+    // Lightbox is a sibling of the container, not a child, so use direct selector
+    const lightbox = $("#lightbox");
+
+    // Verify lightbox exists
+    if (!lightbox.length) {
+      console.error("Lightbox not found");
+      transitioning = false;
+      unlockSite();
+      enableScroll();
+      return;
+    }
 
     // Get the lightbox carousel to determine length
     carousel = lightbox.find(".carouselContainer");
@@ -133,10 +143,17 @@ function initProjectCarousel() {
     lightbox.find("#slide-" + index).css("z-index", 2);
     lightbox.find(".slidenum").html(pad(index) + "/" + pad(length));
 
+    // Update current index for navigation
+    currentLightboxIndex = index;
+    lightboxLength = length;
+
     lightbox.css({
       visibility: "visible",
       transition: "clip-path 1050ms linear",
     });
+
+    // Add "open" class immediately so mobile styles apply during transition
+    lightbox.addClass("open");
 
     // clip in from right
     lightbox.css({
@@ -145,12 +162,7 @@ function initProjectCarousel() {
 
     // prep for close + clear inline styles
     setTimeout(() => {
-      const currentContainer = $(
-        "div[data-barba='container'][data-barba-namespace='project']"
-      );
-      const lightbox = currentContainer.find("#lightbox");
-
-      lightbox.addClass("open");
+      const lightbox = $("#lightbox");
       lightbox.css({
         visibility: "",
         "clip-path": "",
@@ -218,11 +230,86 @@ function initProjectCarousel() {
     }
   }
 
-  // close LB - scope to current page container
-  const currentContainer = $(
-    "div[data-barba='container'][data-barba-namespace='project']"
-  );
-  currentContainer.find("#exit").off("click").on("click", exitLightbox);
+  // close LB - exit button is in lightbox, which is a sibling of container
+  // Use event delegation on document to ensure it works after page transitions
+  $(document)
+    .off("click", "#exit")
+    .on("click", "#exit", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      exitLightbox();
+    });
+
+  // Also bind directly to the exit button if it exists
+  $("#exit")
+    .off("click")
+    .on("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      exitLightbox();
+    });
+
+  // Lightbox navigation function
+  function navigateLightbox(direction) {
+    if (transitioning) return;
+
+    const lightbox = $("#lightbox");
+    if (!lightbox.hasClass("open")) return;
+
+    const carousel = lightbox.find(".carouselContainer");
+    if (!carousel[0]) return;
+
+    lightboxLength = carousel[0].children.length;
+    if (lightboxLength === 0) return;
+
+    // Calculate new index
+    if (direction === "next") {
+      currentLightboxIndex = (currentLightboxIndex % lightboxLength) + 1;
+    } else {
+      currentLightboxIndex = currentLightboxIndex - 1;
+      if (currentLightboxIndex < 1) {
+        currentLightboxIndex = lightboxLength;
+      }
+    }
+
+    // Get target slide
+    const targetSlide = lightbox.find("#slide-" + currentLightboxIndex)[0];
+    if (!targetSlide) return;
+
+    // Load the image if needed
+    loadPictureEl(targetSlide);
+
+    // Hide all slides
+    lightbox.find(".slide").css("display", "none");
+    // Show target slide
+    $(targetSlide).css("display", "");
+
+    // Update z-index
+    lightbox.find(".slide").css("z-index", 1);
+    $(targetSlide).css("z-index", 2);
+
+    // Update slide counter
+    lightbox
+      .find(".slidenum")
+      .html(pad(currentLightboxIndex) + "/" + pad(lightboxLength));
+  }
+
+  // Bind left/right button navigation in lightbox
+  $(document)
+    .off("click", "#lightbox .leftButton")
+    .on("click", "#lightbox .leftButton", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      navigateLightbox("prev");
+    });
+
+  $(document)
+    .off("click", "#lightbox .rightButton")
+    .on("click", "#lightbox .rightButton", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      navigateLightbox("next");
+    });
 
   function exitLightbox() {
     if (transitioning) {
@@ -232,11 +319,8 @@ function initProjectCarousel() {
       lockSite();
     }
 
-    // Get the current page container to scope lightbox selection
-    const currentContainer = $(
-      "div[data-barba='container'][data-barba-namespace='project']"
-    );
-    const lightbox = currentContainer.find("#lightbox");
+    // Lightbox is a sibling of the container, not a child, so use direct selector
+    const lightbox = $("#lightbox");
 
     lightbox.css({
       "clip-path": "inset(0% 100% 0% 0%)",
@@ -271,13 +355,8 @@ function initProjectCarousel() {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           const index = entry.target.dataset.index;
-          // Load from lightbox carousel in current page container
-          const currentContainer = $(
-            "div[data-barba='container'][data-barba-namespace='project']"
-          );
-          const lightboxCarousel = currentContainer.find(
-            "#lightbox .carouselContainer"
-          );
+          // Load from lightbox carousel - lightbox is a sibling, not a child
+          const lightboxCarousel = $("#lightbox .carouselContainer");
           if (lightboxCarousel[0] && lightboxCarousel[0].children[index - 1]) {
             loadPictureEl(lightboxCarousel[0].children[index - 1]);
           }

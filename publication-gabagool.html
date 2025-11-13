@@ -31,19 +31,34 @@
     <script src="assets/js/app.js"></script>
 
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-JT0G06KY8X"
-    ></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
+      // Only load Google Analytics when not using file:// protocol
+      if (window.location.protocol !== "file:") {
+        (function () {
+          try {
+            const script = document.createElement("script");
+            script.async = true;
+            script.src =
+              "https://www.googletagmanager.com/gtag/js?id=G-JT0G06KY8X";
+            document.head.appendChild(script);
 
-      function gtag() {
-        dataLayer.push(arguments);
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              try {
+                dataLayer.push(arguments);
+              } catch (e) {
+                // Silently fail in development
+              }
+            }
+            gtag("js", new Date());
+            gtag("config", "G-JT0G06KY8X");
+            window.gtag = gtag;
+          } catch (e) {
+            // Silently fail in development
+          }
+        })();
       }
-      gtag("js", new Date());
-
-      gtag("config", "G-JT0G06KY8X");
     </script>
   </head>
 

@@ -28,19 +28,34 @@
     <script src="assets/js/app.js"></script>
 
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-JT0G06KY8X"
-    ></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
+      // Only load Google Analytics when not using file:// protocol
+      if (window.location.protocol !== "file:") {
+        (function () {
+          try {
+            const script = document.createElement("script");
+            script.async = true;
+            script.src =
+              "https://www.googletagmanager.com/gtag/js?id=G-JT0G06KY8X";
+            document.head.appendChild(script);
 
-      function gtag() {
-        dataLayer.push(arguments);
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              try {
+                dataLayer.push(arguments);
+              } catch (e) {
+                // Silently fail in development
+              }
+            }
+            gtag("js", new Date());
+            gtag("config", "G-JT0G06KY8X");
+            window.gtag = gtag;
+          } catch (e) {
+            // Silently fail in development
+          }
+        })();
       }
-      gtag("js", new Date());
-
-      gtag("config", "G-JT0G06KY8X");
     </script>
   </head>
 
@@ -186,7 +201,7 @@
               <picture class="slide-content" style="aspect-ratio: 1.5">
                 <img
                   class="slide-content"
-                  data-src="media/pages/kalendar-mockup/mockup kalendar final -01.png"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -01.jpg"
                   alt="Mockup 01"
                 />
               </picture>
@@ -200,7 +215,7 @@
               <picture class="slide-content" style="aspect-ratio: 1.5">
                 <img
                   class="slide-content"
-                  data-src="media/pages/kalendar-mockup/mockup kalendar final -02.png"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -02.jpg"
                   alt="Mockup 02"
                 />
               </picture>
@@ -214,7 +229,7 @@
               <picture class="slide-content" style="aspect-ratio: 1.5">
                 <img
                   class="slide-content"
-                  data-src="media/pages/kalendar-mockup/mockup kalendar final -03.png"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -03.jpg"
                   alt="Mockup 03"
                 />
               </picture>
@@ -228,7 +243,7 @@
               <picture class="slide-content" style="aspect-ratio: 1.5">
                 <img
                   class="slide-content"
-                  data-src="media/pages/kalendar-mockup/mockup kalendar final -04.png"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -04.jpg"
                   alt="Mockup 04"
                 />
               </picture>
@@ -242,7 +257,7 @@
               <picture class="slide-content" style="aspect-ratio: 1.5">
                 <img
                   class="slide-content"
-                  data-src="media/pages/kalendar-mockup/mockup kalendar final -05.png"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -05.jpg"
                   alt="Mockup 05"
                 />
               </picture>
@@ -256,7 +271,7 @@
               <picture class="slide-content" style="aspect-ratio: 1.5">
                 <img
                   class="slide-content"
-                  data-src="media/pages/kalendar-mockup/mockup kalendar final -06.png"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -06.jpg"
                   alt="Mockup 06"
                 />
               </picture>
@@ -270,7 +285,7 @@
               <picture class="slide-content" style="aspect-ratio: 1.5">
                 <img
                   class="slide-content"
-                  data-src="media/pages/kalendar-mockup/mockup kalendar final -07.png"
+                  data-src="media/pages/kalendar-mockup/mockup kalendar final -07.jpg"
                   alt="Mockup 07"
                 />
               </picture>

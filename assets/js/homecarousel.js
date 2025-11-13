@@ -25,8 +25,8 @@ function initHomeCarousels() {
   // carousel functionality
   var turning = false;
   for (let i = 0; i <= projectCount; i++) {
-    // right button
-    $(`.rightButton.${i}`).click(function () {
+    // Helper function to handle carousel navigation
+    function handleRightClick() {
       if (!turning) {
         turning = true;
         let carousel = $(`.carouselContainer.${i}`);
@@ -67,10 +67,9 @@ function initHomeCarousels() {
           turning = false;
         }, 1050);
       }
-    });
+    }
 
-    // left button
-    $(`.leftButton.${i}`).click(function () {
+    function handleLeftClick() {
       if (!turning) {
         turning = true;
         let carousel = $(`.carouselContainer.${i}`);
@@ -111,6 +110,34 @@ function initHomeCarousels() {
           turning = false;
         }, 1050);
       }
-    });
+    }
+
+    // right button - support both click and touch for mobile
+    $(`.rightButton.${i}`)
+      .off("click touchstart")
+      .on("touchstart", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleRightClick();
+      })
+      .on("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleRightClick();
+      });
+
+    // left button - support both click and touch for mobile
+    $(`.leftButton.${i}`)
+      .off("click touchstart")
+      .on("touchstart", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleLeftClick();
+      })
+      .on("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleLeftClick();
+      });
   }
 }

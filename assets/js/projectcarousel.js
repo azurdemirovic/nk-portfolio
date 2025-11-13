@@ -170,9 +170,22 @@ function initProjectCarousel() {
     finalLightbox.find("#slide-" + index).css("z-index", 2);
     finalLightbox.find(".slidenum").html(pad(index) + "/" + pad(length));
 
-    // Update current index for navigation
+    // Update current index for navigation - always reset to the opened image
+    // This ensures navigation works correctly even when switching between projects
     currentLightboxIndex = index;
     lightboxLength = length;
+    
+    // Validate that the index exists in the current lightbox
+    const currentLightbox = finalLightbox;
+    const currentCarousel = currentLightbox.find(".carouselContainer");
+    const actualLength = currentCarousel[0] ? currentCarousel[0].children.length : 0;
+    if (actualLength > 0 && actualLength !== length) {
+      // Lightbox length changed (different project), reset index if needed
+      lightboxLength = actualLength;
+      if (currentLightboxIndex > actualLength) {
+        currentLightboxIndex = actualLength;
+      }
+    }
 
     finalLightbox.css({
       visibility: "visible",
@@ -300,14 +313,32 @@ function initProjectCarousel() {
   function navigateLightbox(direction) {
     if (transitioning) return;
 
-    const lightbox = $("#lightbox");
-    if (!lightbox.hasClass("open")) return;
+    // Get the current project's lightbox to ensure we're using the correct one
+    const currentContainer = $(
+      "div[data-barba='container'][data-barba-namespace='project']"
+    );
+    if (!currentContainer.length) return;
 
-    const carousel = lightbox.find(".carouselContainer");
+    const lightbox = currentContainer.siblings("#lightbox").first();
+    const lightboxFallback = $("#lightbox");
+    const finalLightbox = lightbox.length ? lightbox : lightboxFallback;
+    
+    if (!finalLightbox.hasClass("open")) return;
+
+    const carousel = finalLightbox.find(".carouselContainer");
     if (!carousel[0]) return;
 
-    lightboxLength = carousel[0].children.length;
-    if (lightboxLength === 0) return;
+    // Always recalculate length from current lightbox to ensure accuracy
+    const actualLength = carousel[0].children.length;
+    if (actualLength === 0) return;
+
+    // Update lightboxLength to match current project
+    lightboxLength = actualLength;
+    
+    // Validate currentLightboxIndex is within bounds
+    if (currentLightboxIndex < 1 || currentLightboxIndex > lightboxLength) {
+      currentLightboxIndex = 1;
+    }
 
     // Calculate new index
     if (direction === "next") {
@@ -319,31 +350,48 @@ function initProjectCarousel() {
       }
     }
 
-    // Get target slide
-    const targetSlide = lightbox.find("#slide-" + currentLightboxIndex)[0];
-    if (!targetSlide) return;
+    // Get target slide from the current lightbox
+    const targetSlide = finalLightbox.find("#slide-" + currentLightboxIndex)[0];
+    if (!targetSlide) {
+      // If slide not found, reset to first slide
+      currentLightboxIndex = 1;
+      const firstSlide = finalLightbox.find("#slide-1")[0];
+      if (!firstSlide) return;
+      loadPictureEl(firstSlide);
+      finalLightbox.find(".slide").css("display", "none");
+      $(firstSlide).css("display", "");
+      finalLightbox.find(".slide").css("z-index", 1);
+      $(firstSlide).css("z-index", 2);
+      finalLightbox.find(".slidenum").html(pad(1) + "/" + pad(lightboxLength));
+      return;
+    }
 
     // Load the image if needed
     loadPictureEl(targetSlide);
 
     // Hide all slides
-    lightbox.find(".slide").css("display", "none");
+    finalLightbox.find(".slide").css("display", "none");
     // Show target slide
     $(targetSlide).css("display", "");
 
     // Update z-index
-    lightbox.find(".slide").css("z-index", 1);
+    finalLightbox.find(".slide").css("z-index", 1);
     $(targetSlide).css("z-index", 2);
 
     // Update slide counter
-    lightbox
+    finalLightbox
       .find(".slidenum")
       .html(pad(currentLightboxIndex) + "/" + pad(lightboxLength));
   }
 
-  // Bind left/right button navigation in lightbox
+  // Bind left/right button navigation in lightbox - support both click and touch
   $(document)
-    .off("click", "#lightbox .leftButton")
+    .off("click touchstart", "#lightbox .leftButton")
+    .on("touchstart", "#lightbox .leftButton", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      navigateLightbox("prev");
+    })
     .on("click", "#lightbox .leftButton", function (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -351,7 +399,12 @@ function initProjectCarousel() {
     });
 
   $(document)
-    .off("click", "#lightbox .rightButton")
+    .off("click touchstart", "#lightbox .rightButton")
+    .on("touchstart", "#lightbox .rightButton", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      navigateLightbox("next");
+    })
     .on("click", "#lightbox .rightButton", function (e) {
       e.preventDefault();
       e.stopPropagation();

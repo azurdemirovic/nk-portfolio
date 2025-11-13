@@ -1119,6 +1119,23 @@ div[data-barba-namespace="homepage"] .rightButton {
   .carouselArea.shortened {
     max-width: calc(100% * 0.75);
   }
+
+  /* Loader text - make smaller on mobile to maintain layout */
+  .loader-text {
+    font-size: clamp(15px, 3.7vw, 22px);
+    left: 16px;
+    letter-spacing: 0.5px;
+    word-spacing: 1px;
+  }
+
+  .loader-signature {
+    width: 120px;
+  }
+
+  .loader-signature img {
+    height: 70vh;
+    max-width: 100vh;
+  }
 }
 
 .pointer-events-none {

@@ -67,6 +67,21 @@ function initProjectCarousel() {
       disableScroll();
     }
 
+    // Get the current page container FIRST to ensure we're using the right project's lightbox
+    const currentContainer = $(
+      "div[data-barba='container'][data-barba-namespace='project']"
+    );
+
+    if (!currentContainer.length) {
+      console.error("Project container not found");
+      transitioning = false;
+      unlockSite();
+      enableScroll();
+      return;
+    }
+
+    // Get index from the clicked grid item - ensure we're getting it from the current project's grid
+    // Use the grid item that was actually clicked (this)
     var index = Number($(this).attr("data-index"));
 
     // Validate index - if missing or invalid, try to find it from the element
@@ -74,10 +89,16 @@ function initProjectCarousel() {
       // Try to get index from dataset or find position in grid
       index = $(this).data("index") || $(this).attr("data-index");
       if (!index || isNaN(index)) {
-        // Fallback: find position in grid container
-        const gridContainer = $(this).closest(".gridContainer");
+        // Fallback: find position in grid container within current project
+        const gridContainer = currentContainer.find(".gridContainer");
         if (gridContainer.length) {
           index = gridContainer.find(".grid-item").index($(this)) + 1;
+        } else {
+          // Last resort: find in any grid container
+          const anyGridContainer = $(this).closest(".gridContainer");
+          if (anyGridContainer.length) {
+            index = anyGridContainer.find(".grid-item").index($(this)) + 1;
+          }
         }
       }
       index = Number(index);
@@ -85,23 +106,29 @@ function initProjectCarousel() {
 
     // If still no valid index, log error and return
     if (!index || isNaN(index) || index < 1) {
-      console.error("Could not determine grid item index", this);
+      console.error(
+        "Could not determine grid item index",
+        this,
+        "Current container:",
+        currentContainer
+      );
       transitioning = false;
       unlockSite();
       enableScroll();
       return;
     }
 
-    // Get the current page container to get project color
-    const currentContainer = $(
-      "div[data-barba='container'][data-barba-namespace='project']"
-    );
     // Lightbox is a sibling of the container, not a child, so use direct selector
-    const lightbox = $("#lightbox");
+    // But ensure we're using the lightbox from the current project page
+    const lightbox = currentContainer.siblings("#lightbox").first();
+
+    // Fallback: if lightbox not found as sibling, try direct selector
+    const lightboxFallback = $("#lightbox");
+    const finalLightbox = lightbox.length ? lightbox : lightboxFallback;
 
     // Verify lightbox exists
-    if (!lightbox.length) {
-      console.error("Lightbox not found");
+    if (!finalLightbox.length) {
+      console.error("Lightbox not found for current project");
       transitioning = false;
       unlockSite();
       enableScroll();
@@ -109,7 +136,7 @@ function initProjectCarousel() {
     }
 
     // Get the lightbox carousel to determine length
-    carousel = lightbox.find(".carouselContainer");
+    carousel = finalLightbox.find(".carouselContainer");
     length = carousel[0] ? carousel[0].children.length : 0;
 
     // Get project color and set lightbox background to darker shade
@@ -120,12 +147,12 @@ function initProjectCarousel() {
       // For Desiderata, use the already-darkened base color (#b8babc) and darken it further
       const baseColor = projectColor === "#d5d7d9" ? "#b8babc" : projectColor;
       const darkerColor = darkenColor(baseColor, darkenAmount);
-      lightbox.css("background-color", darkerColor);
+      finalLightbox.css("background-color", darkerColor);
     }
 
     // load only the clicked picture element
     // index uses 1-based numbering
-    const targetSlide = lightbox.find("#slide-" + index)[0];
+    const targetSlide = finalLightbox.find("#slide-" + index)[0];
     if (!targetSlide) {
       console.error("Slide not found:", index, "in lightbox");
       transitioning = false;
@@ -136,33 +163,33 @@ function initProjectCarousel() {
     loadPictureEl(targetSlide);
 
     // hide all slides except the clicked slide
-    lightbox.find(".slide").css("display", "none");
-    lightbox.find("#slide-" + index).css("display", "");
+    finalLightbox.find(".slide").css("display", "none");
+    finalLightbox.find("#slide-" + index).css("display", "");
 
-    lightbox.find(".slide").css("z-index", 1);
-    lightbox.find("#slide-" + index).css("z-index", 2);
-    lightbox.find(".slidenum").html(pad(index) + "/" + pad(length));
+    finalLightbox.find(".slide").css("z-index", 1);
+    finalLightbox.find("#slide-" + index).css("z-index", 2);
+    finalLightbox.find(".slidenum").html(pad(index) + "/" + pad(length));
 
     // Update current index for navigation
     currentLightboxIndex = index;
     lightboxLength = length;
 
-    lightbox.css({
+    finalLightbox.css({
       visibility: "visible",
       transition: "clip-path 1050ms linear",
     });
 
     // Add "open" class immediately so mobile styles apply during transition
-    lightbox.addClass("open");
+    finalLightbox.addClass("open");
 
     // clip in from right
-    lightbox.css({
+    finalLightbox.css({
       "clip-path": "inset(0% 0% 0% 0%)",
     });
 
     // prep for close + clear inline styles
     setTimeout(() => {
-      const lightbox = $("#lightbox");
+      const lightbox = finalLightbox;
       lightbox.css({
         visibility: "",
         "clip-path": "",
@@ -176,8 +203,12 @@ function initProjectCarousel() {
       unlockSite();
       transitioning = false;
 
-      // Make the slide and image clickable to exit (bind after lightbox is open)
-      lightbox.find(".slide").off("click").on("click", exitLightbox);
+      // Make the slide clickable to exit on desktop only (not mobile)
+      // Check if device is mobile by checking touch capability and screen width
+      const isMobile = window.innerWidth <= 800 || "ontouchstart" in window;
+      if (!isMobile) {
+        lightbox.find(".slide").off("click").on("click", exitLightbox);
+      }
     }, 1050);
 
     // bind events
@@ -185,43 +216,59 @@ function initProjectCarousel() {
   }
 
   // Bind both click and touch events for better cross-device compatibility
-  // Use event delegation on document to ensure it works even if elements are added later
+  // Use event delegation scoped to project namespace to ensure correct project's grid items
   // Remove any existing handlers first to prevent duplicates after page transitions
   $(document)
-    .off("click touchstart", ".grid-item")
-    .on("touchstart", ".grid-item", function (e) {
-      touchStartTime = Date.now();
-      touchTarget = this;
-      openLightboxHandler.call(this, e);
-    })
-    .on("click", ".grid-item", function (e) {
-      // Only handle click if it wasn't from a touch
-      if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
-        openLightboxHandler.call(this, e);
-      }
-      touchStartTime = 0;
-      touchTarget = null;
-    });
-
-  // Also bind directly to existing elements as a fallback
-  // This ensures immediate binding if elements already exist
-  const gridItems = $(".grid-item");
-  if (gridItems.length > 0) {
-    gridItems
-      .off("click touchstart")
-      .on("touchstart", function (e) {
+    .off("click touchstart", "div[data-barba-namespace='project'] .grid-item")
+    .on(
+      "touchstart",
+      "div[data-barba-namespace='project'] .grid-item",
+      function (e) {
+        e.stopPropagation();
         touchStartTime = Date.now();
         touchTarget = this;
         openLightboxHandler.call(this, e);
-      })
-      .on("click", function (e) {
+      }
+    )
+    .on(
+      "click",
+      "div[data-barba-namespace='project'] .grid-item",
+      function (e) {
         // Only handle click if it wasn't from a touch
         if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
           openLightboxHandler.call(this, e);
         }
         touchStartTime = 0;
         touchTarget = null;
-      });
+      }
+    );
+
+  // Also bind directly to existing elements as a fallback
+  // This ensures immediate binding if elements already exist
+  // Scope to current project container to avoid conflicts between projects
+  const currentProjectContainer = $(
+    "div[data-barba='container'][data-barba-namespace='project']"
+  );
+  if (currentProjectContainer.length) {
+    const gridItems = currentProjectContainer.find(".grid-item");
+    if (gridItems.length > 0) {
+      gridItems
+        .off("click touchstart")
+        .on("touchstart", function (e) {
+          e.stopPropagation();
+          touchStartTime = Date.now();
+          touchTarget = this;
+          openLightboxHandler.call(this, e);
+        })
+        .on("click", function (e) {
+          // Only handle click if it wasn't from a touch
+          if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
+            openLightboxHandler.call(this, e);
+          }
+          touchStartTime = 0;
+          touchTarget = null;
+        });
+    }
   }
 
   function exitLightboxOnEsc(e) {

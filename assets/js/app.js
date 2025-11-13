@@ -173,17 +173,15 @@ $(document).ready(function () {
           });
           $("#homepage").css("visibility", "hidden");
 
-          // Prevent body scrolling on project pages to fix Safari URL bar issue
-          // CSS handles height with proper fallbacks, we just need to prevent overflow
-          // Use 100dvh to account for Safari URL bar
-          const viewportHeight = window.innerHeight;
+          // Allow body to scroll naturally - .tinted-bg will handle scrolling
+          // Remove any fixed positioning that might prevent scrolling
           $("body").css({
-            overflow: "hidden",
-            position: "fixed",
-            width: "100%",
-            height: viewportHeight + "px",
-            top: "0",
-            left: "0",
+            overflow: "",
+            position: "",
+            width: "",
+            height: "",
+            top: "",
+            left: "",
           });
 
           // Ensure project container content is visible

@@ -1,7 +1,7 @@
 /* Debug */
-* {
-  /* outline: 1px solid red; */
-}
+/* * {
+  outline: 1px solid red;
+} */
 
 /* Reset */
 *,
@@ -137,7 +137,7 @@ div[data-barba="container"][data-barba-namespace="project"] {
   height: 100vh;
   height: -webkit-fill-available;
   height: 100dvh;
-  overflow: hidden;
+  overflow: hidden; /* Keep container from scrolling, but allow .tinted-bg to scroll */
 }
 
 div[data-barba-namespace="project"] .tinted-bg {
@@ -146,19 +146,19 @@ div[data-barba-namespace="project"] .tinted-bg {
   min-height: 100vh;
   min-height: -webkit-fill-available;
   min-height: 100dvh;
-  max-height: 100vh;
-  max-height: -webkit-fill-available;
-  max-height: 100dvh;
+  max-height: none; /* Allow content to exceed viewport */
   padding: 14px 16px;
   padding-bottom: calc(
     14px + 42px
   ); /* Add space for marquee (30px height + 12px bottom) */
   box-sizing: border-box;
   background-color: var(--siteColorTinted);
-  overflow: hidden; /* Prevent scrolling - everything should fit */
+  overflow-y: auto; /* Allow vertical scrolling when content exceeds viewport */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
   position: relative;
   display: flex;
   flex-direction: column;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Ensure content fits within viewport on project pages */

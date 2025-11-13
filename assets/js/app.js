@@ -155,12 +155,28 @@ $(document).ready(function () {
           // Mark that we've navigated away from homepage
           hasNavigatedAway = true;
           // Hide loader and homepage when entering project page
+          // Ensure loader is completely hidden with transparent background
           $(".loader").css({
             visibility: "hidden",
             display: "none",
             "z-index": "-1",
+            "background-color": "transparent",
+            opacity: "0",
+            "clip-path": "inset(0% 100% 0% 0%)",
+            position: "fixed",
           });
           $("#homepage").css("visibility", "hidden");
+
+          // Ensure project container content is visible
+          if (data.next.container) {
+            data.next.container.style.visibility = "visible";
+            data.next.container.style.display = "block";
+            const tintedBg = data.next.container.querySelector(".tinted-bg");
+            if (tintedBg) {
+              tintedBg.style.visibility = "visible";
+              tintedBg.style.display = "block";
+            }
+          }
 
           startMarquee("div[data-barba-namespace='project'] #mqr");
           // Lightbox marquee removed - no longer needed
@@ -179,6 +195,28 @@ $(document).ready(function () {
           }, titleScrolledForFirstTime ? 0 : 5000);
         },
         afterEnter(data) {
+          // Final check: ensure loader is completely hidden and content is visible
+          $(".loader").css({
+            visibility: "hidden",
+            display: "none",
+            "z-index": "-1",
+            "background-color": "transparent",
+            opacity: "0",
+            "clip-path": "inset(0% 100% 0% 0%)",
+            position: "fixed",
+          });
+
+          // Ensure project container and content are visible
+          if (data.next.container) {
+            data.next.container.style.visibility = "visible";
+            data.next.container.style.display = "block";
+            const tintedBg = data.next.container.querySelector(".tinted-bg");
+            if (tintedBg) {
+              tintedBg.style.visibility = "visible";
+              tintedBg.style.display = "block";
+            }
+          }
+
           initProjectCarousel();
           initBTTButton(data.next.container);
         },

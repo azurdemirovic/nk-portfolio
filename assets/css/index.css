@@ -79,6 +79,12 @@ body.transitioning .loader {
   opacity: 0 !important;
 }
 
+/* Ensure loader background doesn't show through on project pages */
+/* JavaScript will handle hiding, but this ensures background is transparent */
+div[data-barba-namespace="project"] ~ .loader {
+  background-color: transparent !important;
+}
+
 body.transitioning > div {
   position: absolute;
 }

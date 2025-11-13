@@ -579,6 +579,10 @@ div[data-barba-namespace="homepage"] .carouselArea.shortened {
   cursor: pointer;
   height: auto;
   width: 100%;
+  /* Ensure clicks/touches work on all devices */
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 picture.grid-item img {
@@ -586,6 +590,15 @@ picture.grid-item img {
   width: 100%;
   object-fit: contain;
   object-position: center;
+  /* Ensure images don't block clicks */
+  pointer-events: none;
+  user-select: none;
+}
+
+picture.grid-item {
+  /* Ensure the picture element itself is clickable */
+  pointer-events: auto;
+  display: block;
 }
 
 /* Lightbox */
@@ -683,6 +696,9 @@ div[data-barba-namespace="homepage"] .carouselContainer {
   justify-content: center;
   overflow: visible !important;
   cursor: pointer;
+  /* Enable pinch-to-zoom on touch devices */
+  touch-action: pan-x pan-y pinch-zoom;
+  -ms-touch-action: pan-x pan-y pinch-zoom;
 }
 
 #lightbox .slide picture.slide-content {
@@ -696,6 +712,9 @@ div[data-barba-namespace="homepage"] .carouselContainer {
   aspect-ratio: unset !important;
   overflow: visible;
   cursor: pointer;
+  /* Enable pinch-to-zoom on touch devices */
+  touch-action: pan-x pan-y pinch-zoom;
+  -ms-touch-action: pan-x pan-y pinch-zoom;
 }
 
 #lightbox .slide img.slide-content {
@@ -710,6 +729,9 @@ div[data-barba-namespace="homepage"] .carouselContainer {
   object-position: center;
   overflow: visible;
   cursor: pointer;
+  /* Enable pinch-to-zoom on touch devices */
+  touch-action: pan-x pan-y pinch-zoom;
+  -ms-touch-action: pan-x pan-y pinch-zoom;
 }
 
 .leftButton {

@@ -7,8 +7,30 @@ function initProjectCarousel() {
   carousel = $("#lightbox .carouselContainer");
   length = carousel[0] ? carousel[0].children.length : 0;
 
-  // open LB
-  $(".grid-item").click(function () {
+  // Track touch events to prevent double-firing with click
+  let touchStartTime = 0;
+  let touchTarget = null;
+
+  // open LB - support both click and touch events for better device compatibility
+  function openLightboxHandler(e) {
+    // For touch devices, only handle if it's a touchstart (not click that follows)
+    if (
+      e.type === "click" &&
+      touchStartTime > 0 &&
+      Date.now() - touchStartTime < 500
+    ) {
+      // This click was likely triggered by a touch, ignore it
+      touchStartTime = 0;
+      return;
+    }
+
+    // Only prevent default on touch events to avoid scrolling
+    // Don't prevent default on click events as it can interfere with some browsers
+    if (e.type === "touchstart") {
+      e.preventDefault();
+    }
+    e.stopPropagation();
+
     if (transitioning) {
       return;
     } else {
@@ -18,6 +40,29 @@ function initProjectCarousel() {
     }
 
     var index = Number($(this).attr("data-index"));
+
+    // Validate index - if missing or invalid, try to find it from the element
+    if (!index || isNaN(index)) {
+      // Try to get index from dataset or find position in grid
+      index = $(this).data("index") || $(this).attr("data-index");
+      if (!index || isNaN(index)) {
+        // Fallback: find position in grid container
+        const gridContainer = $(this).closest(".gridContainer");
+        if (gridContainer.length) {
+          index = gridContainer.find(".grid-item").index($(this)) + 1;
+        }
+      }
+      index = Number(index);
+    }
+
+    // If still no valid index, log error and return
+    if (!index || isNaN(index) || index < 1) {
+      console.error("Could not determine grid item index", this);
+      transitioning = false;
+      unlockSite();
+      enableScroll();
+      return;
+    }
 
     // Get the lightbox carousel to determine length
     carousel = $("#lightbox .carouselContainer");
@@ -67,7 +112,47 @@ function initProjectCarousel() {
 
     // bind events
     $(document).keyup(exitLightboxOnEsc);
-  });
+  }
+
+  // Bind both click and touch events for better cross-device compatibility
+  // Use event delegation on document to ensure it works even if elements are added later
+  // Remove any existing handlers first to prevent duplicates after page transitions
+  $(document)
+    .off("click touchstart", ".grid-item")
+    .on("touchstart", ".grid-item", function (e) {
+      touchStartTime = Date.now();
+      touchTarget = this;
+      openLightboxHandler.call(this, e);
+    })
+    .on("click", ".grid-item", function (e) {
+      // Only handle click if it wasn't from a touch
+      if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
+        openLightboxHandler.call(this, e);
+      }
+      touchStartTime = 0;
+      touchTarget = null;
+    });
+
+  // Also bind directly to existing elements as a fallback
+  // This ensures immediate binding if elements already exist
+  const gridItems = $(".grid-item");
+  if (gridItems.length > 0) {
+    gridItems
+      .off("click touchstart")
+      .on("touchstart", function (e) {
+        touchStartTime = Date.now();
+        touchTarget = this;
+        openLightboxHandler.call(this, e);
+      })
+      .on("click", function (e) {
+        // Only handle click if it wasn't from a touch
+        if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
+          openLightboxHandler.call(this, e);
+        }
+        touchStartTime = 0;
+        touchTarget = null;
+      });
+  }
 
   function exitLightboxOnEsc(e) {
     if (e.key === "Escape") {

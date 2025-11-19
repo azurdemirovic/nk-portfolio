@@ -277,13 +277,17 @@ function adjustGridSizing() {
 
   // Also set max-width and max-height on grid items to ensure images don't exceed calculated size
   // This prevents images from overflowing their grid cells and getting cropped
-  gridItems.forEach((item) => {
+  gridItems.forEach((item, index) => {
     const img = item.querySelector("img");
     if (img) {
       img.style.maxWidth = "100%";
       img.style.maxHeight = finalItemHeightCheck + "px";
       img.style.width = "auto";
       img.style.height = "auto";
+      // Add loading="lazy" for browser-level optimization (first few images can be eager)
+      if (!img.hasAttribute("loading")) {
+        img.setAttribute("loading", index < 4 ? "eager" : "lazy");
+      }
       // Ensure the grid item itself doesn't exceed its cell size
       item.style.maxWidth = "100%";
       item.style.maxHeight = finalItemHeightCheck + "px";

@@ -22,6 +22,28 @@ function initHomeCarousels() {
   let projectCount = document.querySelectorAll(".project").length;
   counters = Array(projectCount + 1).fill(0);
 
+  // Initialize lazy loading: convert non-visible images to data-src
+  // Only keep the first slide's image with src (for immediate loading)
+  $(".carouselContainer").each(function () {
+    var $carousel = $(this);
+    var $slides = $carousel.find(".slide");
+    $slides.each(function (index) {
+      var $img = $(this).find("img[src]");
+      if ($img.length && !$img.attr("data-src")) {
+        if (index > 0) {
+          // Skip first slide (index 0) - keep it with src
+          var src = $img.attr("src");
+          $img.attr("data-src", src);
+          $img.removeAttr("src");
+        }
+        // Add loading="lazy" to all images for browser optimization
+        if (!$img.attr("loading")) {
+          $img.attr("loading", index === 0 ? "eager" : "lazy");
+        }
+      }
+    });
+  });
+
   // Track touch events to prevent double-firing with click
   let touchStartTime = 0;
 
@@ -37,8 +59,12 @@ function initHomeCarousels() {
 
         // load adjacent picture elements in the direction the
         // carousel is being advanced, counters[i] uses 1-based numbering
-        loadPictureEl(carousel[0].children[getWrappedIndex(counters[i] + 1, length)]);
-        loadPictureEl(carousel[0].children[getWrappedIndex(counters[i] + 2, length)]);
+        loadPictureEl(
+          carousel[0].children[getWrappedIndex(counters[i] + 1, length)]
+        );
+        loadPictureEl(
+          carousel[0].children[getWrappedIndex(counters[i] + 2, length)]
+        );
 
         // outgoing el
         let prev = carousel[0].children[counters[i]];
@@ -80,8 +106,12 @@ function initHomeCarousels() {
 
         // load adjacent picture elements in the direction the
         // carousel is being advanced, counters[i] uses 1-based numbering
-        loadPictureEl(carousel[0].children[getWrappedIndex(counters[i] - 1, length)]);
-        loadPictureEl(carousel[0].children[getWrappedIndex(counters[i] - 2, length)]);
+        loadPictureEl(
+          carousel[0].children[getWrappedIndex(counters[i] - 1, length)]
+        );
+        loadPictureEl(
+          carousel[0].children[getWrappedIndex(counters[i] - 2, length)]
+        );
 
         // outgoing el
         let prev = carousel[0].children[counters[i]];

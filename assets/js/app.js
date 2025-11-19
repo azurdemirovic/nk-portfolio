@@ -199,6 +199,11 @@ $(document).ready(function () {
           // Lightbox marquee removed - no longer needed
           // startMarquee("div[data-barba-namespace='project'] #lb-mqr");
 
+          // Adjust grid sizing for responsive viewport filling
+          if (typeof adjustGridSizing === "function") {
+            setTimeout(adjustGridSizing, 300);
+          }
+
           // set document title
           let projectTitle = data.next.container.dataset.projectTitle;
 

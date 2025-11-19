@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nadja Kurtalic's portfolio website" />
+    <title>Video 5 - Nadja Kurtalic</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+    <!-- Site color -->
+    <style>
+      html {
+        --siteColor: rgb(204, 206, 69);
+        --siteColorTinted: rgba(204, 206, 69, 0.5);
+      }
+    </style>
+
+    <!-- Assets -->
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <script src="assets/js/fontfaceobserver.js"></script>
+    <script src="assets/js/components/DateDisplay.js"></script>
+    <script src="assets/js/marquee.js"></script>
+
+    <style>
+      body {
+        background-color: white;
+        min-height: 100vh;
+        padding: 14px 16px;
+        padding-bottom: calc(14px + 42px);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .video-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        min-height: 0;
+      }
+
+      video {
+        max-width: 90vw;
+        max-height: calc(90vh - 100px);
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      /* Custom video controls styling */
+      video::-webkit-media-controls-panel {
+        background-color: transparent !important;
+        backdrop-filter: none !important;
+      }
+
+      video::-webkit-media-controls-enclosure {
+        background-color: transparent !important;
+      }
+
+      /* Style the play/pause button - pink color, no background, default size */
+      video::-webkit-media-controls-play-button {
+        background-color: transparent !important;
+        filter: brightness(0) saturate(100%) invert(88%) sepia(20%)
+          saturate(2000%) hue-rotate(300deg) !important;
+      }
+
+      video:hover::-webkit-media-controls-play-button {
+        opacity: 0.7 !important;
+      }
+
+      /* Style the timeline/progress bar - pink */
+      video::-webkit-media-controls-timeline {
+        background-color: rgba(255, 192, 203, 0.3) !important;
+        border-radius: 2px;
+        height: 4px;
+      }
+
+      /* Style progress bar filled portion - pink */
+      video::-webkit-media-controls-current-time-display::before,
+      video::-webkit-media-controls-timeline-container {
+        background-color: rgba(255, 192, 203, 0.5) !important;
+      }
+
+      /* Style time display - pink */
+      video::-webkit-media-controls-current-time-display,
+      video::-webkit-media-controls-time-remaining-display {
+        color: rgb(255, 192, 203) !important;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+      }
+
+      video:hover::-webkit-media-controls-current-time-display,
+      video:hover::-webkit-media-controls-time-remaining-display {
+        color: rgba(255, 192, 203, 0.7) !important;
+      }
+
+      /* Style volume controls - pink */
+      video::-webkit-media-controls-mute-button {
+        color: rgb(255, 192, 203) !important;
+        filter: brightness(0) saturate(100%) invert(88%) sepia(20%)
+          saturate(2000%) hue-rotate(300deg) !important;
+        opacity: 1 !important;
+      }
+
+      video:hover::-webkit-media-controls-mute-button {
+        opacity: 0.7 !important;
+      }
+
+      video::-webkit-media-controls-volume-slider {
+        filter: brightness(0) saturate(100%) invert(88%) sepia(20%)
+          saturate(2000%) hue-rotate(300deg) !important;
+        background-color: transparent !important;
+      }
+
+      /* Style fullscreen button - pink */
+      video::-webkit-media-controls-fullscreen-button {
+        color: rgb(255, 192, 203) !important;
+        filter: brightness(0) saturate(100%) invert(88%) sepia(20%)
+          saturate(2000%) hue-rotate(300deg) !important;
+        opacity: 1 !important;
+      }
+
+      video:hover::-webkit-media-controls-fullscreen-button {
+        opacity: 0.7 !important;
+      }
+
+      /* Style other controls (options menu, etc.) - pink */
+      video::-webkit-media-controls-overlay-play-button,
+      video::-webkit-media-controls-overlay-enclosure {
+        filter: brightness(0) saturate(100%) invert(88%) sepia(20%)
+          saturate(2000%) hue-rotate(300deg) !important;
+      }
+
+      /* Firefox video controls styling */
+      video::-moz-media-controls {
+        filter: brightness(1);
+      }
+
+      /* General control styling */
+      video::-webkit-media-controls {
+        color: rgb(255, 192, 203);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="headerContainer">
+      <p></p>
+      <p id="headerLine"></p>
+      <a href="index.html" class="projectView">back</a>
+    </div>
+
+    <div class="video-container">
+      <video controls autoplay>
+        <source src="media/pages/reels/REELS/REEL 5.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="marquee" id="mqr">
+      <span style="white-space: nowrap" id="mqr-text">
+        <p>
+          <span>&nbsp;&nbsp;</span>
+          <date-display></date-display> and you are viewing VIDEOGRAPHY in Nadja
+          Kurtalic's virtual space.
+        </p>
+      </span>
+    </div>
+    <div class="marquee-spacer">
+      <br />
+    </div>
+
+    <script>
+      var fontLoaded = true;
+      setTimeout(function () {
+        startMarquee("#mqr");
+      }, 100);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nadja Kurtalic's portfolio website" />
+    <title>BRAND IDENTITY: RMNDR LOGO - Nadja Kurtalic</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+    <!-- Site color -->
+    <style>
+      html {
+        --siteColor: rgb(204, 206, 69);
+        --siteColorTinted: rgba(204, 206, 69, 0.5);
+      }
+    </style>
+
+    <!-- Assets -->
+    <link href="assets/css/index.css" rel="stylesheet" />
+    <script src="assets/js/fontfaceobserver.js"></script>
+    <script src="assets/js/components/DateDisplay.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/barba.js"></script>
+    <script src="assets/js/loader.js"></script>
+    <script src="assets/js/projectcarousel.js"></script>
+    <script src="assets/js/marquee.js"></script>
+    <script src="assets/js/screensaver.js"></script>
+    <script src="assets/js/smoothscroll.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/responsivegrid.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script>
+      // Only load Google Analytics when not using file:// protocol
+      if (window.location.protocol !== "file:") {
+        (function () {
+          try {
+            const script = document.createElement("script");
+            script.async = true;
+            script.src =
+              "https://www.googletagmanager.com/gtag/js?id=G-JT0G06KY8X";
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              try {
+                dataLayer.push(arguments);
+              } catch (e) {
+                // Silently fail in development
+              }
+            }
+            gtag("js", new Date());
+            gtag("config", "G-JT0G06KY8X");
+            window.gtag = gtag;
+          } catch (e) {
+            // Silently fail in development
+          }
+        })();
+      }
+    </script>
+  </head>
+
+  <body data-barba="wrapper" data-site-color="204, 206, 69">
+    <!-- Loader -->
+    <div class="loader">
+      <div class="loaderContainer">
+        <div class="loader-text">VIRTUAL SPACE ++++ 2025</div>
+        <div class="loader-signature">
+          <img src="nadja-potpis.png" alt="Signature" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Barba container -->
+    <div
+      data-barba="container"
+      data-barba-namespace="project"
+      data-project-title="BRAND IDENTITY: RMNDR LOGO"
+      data-project-color="#8b6f47"
+    >
+      <div class="tinted-bg">
+        <div id="headerContainer">
+          <p></p>
+          <p id="headerLine"></p>
+          <a href="index.html" class="projectView">back</a>
+        </div>
+
+        <div class="projectText">
+          <p>
+            NK developed the brand identity and logo design for RMNDR, creating
+            a distinctive visual language that captures the essence of the brand
+            through thoughtful typography and design elements.
+          </p>
+        </div>
+
+        <div class="gridContainer">
+          <picture class="grid-item" data-index="1">
+            <img
+              src="media/pages/rmndr-logo/RMNDR MACKUP-01.jpg"
+              alt="RMNDR Mockup 01"
+            />
+          </picture>
+          <picture class="grid-item" data-index="2">
+            <img
+              src="media/pages/rmndr-logo/RMNDR MACKUP-02.jpg"
+              alt="RMNDR Mockup 02"
+            />
+          </picture>
+          <picture class="grid-item" data-index="3">
+            <img
+              src="media/pages/rmndr-logo/RMNDR MACKUP-03.jpg"
+              alt="RMNDR Mockup 03"
+            />
+          </picture>
+        </div>
+
+        <p id="footer"></p>
+
+        <div class="marquee" id="mqr">
+          <span style="white-space: nowrap" id="mqr-text">
+            <p>
+              <span>&nbsp;&nbsp;</span>
+              <date-display></date-display> and you are viewing BRAND IDENTITY:
+              RMNDR LOGO in Nadja Kurtalic's virtual space.
+            </p>
+          </span>
+        </div>
+        <div class="marquee-spacer">
+          <br />
+        </div>
+
+        <button id="btt-button">top↑</button>
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+      <div class="tinted-bg">
+        <div id="headerContainer">
+          <p>
+            <date-display></date-display> and you are viewing Nadja Kurtalic's
+            virtual space.
+          </p>
+
+          <p></p>
+          <p id="headerLine"></p>
+          <button id="exit">exit</button>
+        </div>
+
+        <div>
+          <div class="projectLabelContainer">
+            <div class="projectMeta">
+              <div class="projectMetaRow">
+                <div class="projectMetaLeft">
+                  <span class="projectLabel projectTitle"
+                    >BRAND IDENTITY: RMNDR LOGO</span
+                  >
+                  <span class="projectLabel desktop projectDate"
+                    >SEPTEMBER 2024</span
+                  >
+                  <span class="projectLabel slidenum projectCounter"
+                    >01/03</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carouselArea relative">
+          <div class="carouselContainer">
+            <div
+              class="images slide"
+              id="slide-1"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/rmndr-logo/RMNDR MACKUP-01.jpg"
+                  alt="RMNDR Mockup 01"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-2"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/rmndr-logo/RMNDR MACKUP-02.jpg"
+                  alt="RMNDR Mockup 02"
+                />
+              </picture>
+            </div>
+
+            <div
+              class="images slide"
+              id="slide-3"
+              style="display: none; z-index: 1"
+            >
+              <picture class="slide-content" style="aspect-ratio: 1.5">
+                <img
+                  class="slide-content"
+                  data-src="media/pages/rmndr-logo/RMNDR MACKUP-03.jpg"
+                  alt="RMNDR Mockup 03"
+                />
+              </picture>
+            </div>
+          </div>
+
+          <div class="leftButton"></div>
+          <div class="rightButton"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/bottomnav.js"></script>
+  </body>
+</html>

@@ -134,6 +134,7 @@ $(document).ready(function () {
           }
           initInfoButton();
           initHomeCarousels();
+          initVideoThumbnails();
           startMarquee("div[data-barba-namespace='homepage'] #mqr");
 
           // set document title
@@ -540,4 +541,63 @@ function loadPictureEl(pictureEl) {
       delete child.dataset.src;
     }
   }
+}
+
+/**
+ * Initialize video thumbnail links to ensure normal navigation
+ * This bypasses Barba.js to allow direct navigation to video pages
+ */
+function initVideoThumbnails() {
+  // Ensure video thumbnail links navigate normally, bypassing Barba.js
+  const videoThumbnails = document.querySelectorAll(".video-thumbnail");
+  videoThumbnails.forEach((thumbnail) => {
+    // Add explicit click handler that forces normal navigation
+    // Use capture phase to intercept before Barba.js
+    thumbnail.addEventListener(
+      "click",
+      function (e) {
+        // Stop propagation to prevent Barba.js from intercepting
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        // Allow normal navigation - don't let Barba.js intercept
+        const href = this.getAttribute("href");
+        if (href) {
+          window.location.href = href;
+          return false;
+        }
+      },
+      true
+    ); // Use capture phase
+
+    // Also handle touchend for mobile devices (more reliable than touchstart)
+    thumbnail.addEventListener(
+      "touchstart",
+      function (e) {
+        // Store touch start time on the element
+        this.dataset.touchStart = Date.now().toString();
+      },
+      { passive: true }
+    );
+
+    thumbnail.addEventListener(
+      "touchend",
+      function (e) {
+        // Only navigate if touch was quick (not a scroll)
+        const touchStart = this.dataset.touchStart
+          ? parseInt(this.dataset.touchStart)
+          : 0;
+        if (touchStart > 0 && Date.now() - touchStart < 300) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          const href = this.getAttribute("href");
+          if (href) {
+            window.location.href = href;
+          }
+        }
+        delete this.dataset.touchStart;
+      },
+      { passive: false }
+    );
+  });
 }

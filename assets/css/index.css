@@ -258,15 +258,32 @@ div[data-project-color="#d5d7d9"] .tinted-bg {
   margin-bottom: var(--lineHeight);
 }
 
-div[data-barba-namespace="project"] #headerContainer {
-  margin-bottom: var(--lineHeight);
+.headerContentWrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+
+.headerContentWrapper > p {
+  margin: 0;
+  padding-left: 0;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 #infoButton {
   color: black;
   height: fit-content;
   border-bottom: 2px solid white;
-  margin-left: var(--projNumWidth);
+  margin-left: 0;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+
+div[data-barba-namespace="project"] #headerContainer {
+  margin-bottom: var(--lineHeight);
 }
 
 #homepage {
@@ -1258,10 +1275,31 @@ div[data-barba-namespace="homepage"] .rightButton {
   }
 
   #headerContainer {
-    padding-left: 16px;
-    padding-right: 16px;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
     box-sizing: border-box;
     overflow-x: hidden;
+  }
+
+  .headerContentWrapper {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .headerContentWrapper::before {
+    content: "";
+    width: var(--projNumWidth);
+    float: left;
+    height: 1px;
+  }
+
+  .headerContentWrapper > p:first-of-type {
+    padding-left: 0;
+    margin-left: 0;
+    box-sizing: border-box;
+    margin-right: 60px;
+    overflow: hidden;
   }
 
   #headerContainer p,
@@ -1269,6 +1307,12 @@ div[data-barba-namespace="homepage"] .rightButton {
     word-wrap: break-word;
     overflow-wrap: break-word;
     max-width: 100%;
+  }
+
+  #infoButton {
+    margin-left: 0;
+    float: right;
+    clear: none;
   }
 
   .carouselArea,

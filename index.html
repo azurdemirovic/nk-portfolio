@@ -11,22 +11,29 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://nadjakurtalic.com/" />
+    <meta property="og:url" content="https://nadja.digital/" />
     <meta property="og:title" content="Nadja Kurtalic" />
     <meta property="og:description" content="Nadja's digital portfolio" />
+    <meta property="og:image" content="https://nadja.digital/meta-image.jpg" />
     <meta
-      property="og:image"
-      content="https://nadjakurtalic.com/meta-image.jpg"
+      property="og:image:secure_url"
+      content="https://nadja.digital/meta-image.jpg"
+    />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta
+      property="og:image:alt"
+      content="Nadja Kurtalic - Digital Portfolio"
     />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://nadjakurtalic.com/" />
-    <meta property="twitter:title" content="Nadja Kurtalic" />
-    <meta property="twitter:description" content="Nadja's digital portfolio" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://nadja.digital/" />
+    <meta name="twitter:title" content="Nadja Kurtalic" />
+    <meta name="twitter:description" content="Nadja's digital portfolio" />
+    <meta name="twitter:image" content="https://nadja.digital/meta-image.jpg" />
     <meta
-      property="twitter:image"
-      content="https://nadjakurtalic.com/meta-image.jpg"
+      name="twitter:image:alt"
+      content="Nadja Kurtalic - Digital Portfolio"
     />
 
     <!-- Favicons -->
@@ -115,14 +122,16 @@
     <!-- Barba container -->
     <div data-barba="container" data-barba-namespace="homepage">
       <div id="headerContainer">
-        <p>
-          <date-display></date-display> and you are viewing Nadja Kurtalic's
-          virtual space.
-        </p>
+        <div class="headerContentWrapper">
+          <p>
+            <date-display></date-display> and you are viewing Nadja Kurtalic's
+            virtual space.
+          </p>
+          <button id="infoButton">contact</button>
+        </div>
 
         <p></p>
         <p id="headerLine"></p>
-        <button id="infoButton">contact</button>
       </div>
 
       <div id="introduction" class="centered-list">

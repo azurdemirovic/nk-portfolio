@@ -67,8 +67,7 @@ function initProjectCarousel() {
     }
 
     // Get the current page container FIRST to ensure we're using the right project's lightbox
-    // Always resolve it relative to the clicked grid item to avoid mixing projects
-    const currentContainer = $(this).closest(
+    const currentContainer = $(
       "div[data-barba='container'][data-barba-namespace='project']"
     );
 
@@ -389,12 +388,22 @@ function initProjectCarousel() {
   function navigateLightbox(direction) {
     if (transitioning) return;
 
-    // Always navigate within the lightbox that is currently open
-    const finalLightbox = $("#lightbox.open").first();
-    if (!finalLightbox.length) {
-      console.error("Open lightbox not found for navigation");
+    // Get the current project's lightbox to ensure we're using the correct one
+    const currentContainer = $(
+      "div[data-barba='container'][data-barba-namespace='project']"
+    );
+    if (!currentContainer.length) return;
+
+    // CRITICAL: Always use the lightbox that's a sibling of the current container
+    // Don't use fallback to $("#lightbox") as it might find a lightbox from a different project
+    const lightbox = currentContainer.siblings("#lightbox").first();
+    if (!lightbox.length) {
+      console.error("Lightbox not found for navigation");
       return;
     }
+    const finalLightbox = lightbox;
+
+    if (!finalLightbox.hasClass("open")) return;
 
     const carousel = finalLightbox.find(".carouselContainer");
     if (!carousel[0]) return;
@@ -507,10 +516,18 @@ function initProjectCarousel() {
       lockSite();
     }
 
-    // Always close the lightbox that is currently open
-    const lightbox = $("#lightbox.open").first();
+    // Get the current project's lightbox to ensure we're closing the correct one
+    const currentContainer = $(
+      "div[data-barba='container'][data-barba-namespace='project']"
+    );
+    // Lightbox is a sibling of the container, not a child, so use direct selector
+    // CRITICAL: Always use the lightbox that's a sibling of the current container
+    // Don't use fallback to $("#lightbox") as it might find a lightbox from a different project
+    const lightbox = currentContainer.length
+      ? currentContainer.siblings("#lightbox").first()
+      : $();
 
-    if (!lightbox.length) {
+    if (!lightbox || !lightbox.length) {
       console.error("Lightbox not found for exit");
       transitioning = false;
       unlockSite();
@@ -552,7 +569,7 @@ function initProjectCarousel() {
           const index = entry.target.dataset.index;
           // Load from lightbox carousel - lightbox is a sibling, not a child
           // CRITICAL: Use the current project's lightbox, not just any lightbox
-          const currentContainer = $(entry.target).closest(
+          const currentContainer = $(
             "div[data-barba='container'][data-barba-namespace='project']"
           );
           // Don't use fallback to $("#lightbox") as it might find a lightbox from a different project

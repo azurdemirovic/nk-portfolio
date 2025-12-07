@@ -284,10 +284,9 @@ function adjustGridSizing() {
       img.style.maxHeight = finalItemHeightCheck + "px";
       img.style.width = "auto";
       img.style.height = "auto";
-      // Add loading="lazy" for browser-level optimization (first few images can be eager)
-      if (!img.hasAttribute("loading")) {
-        img.setAttribute("loading", index < 4 ? "eager" : "lazy");
-      }
+      // IntersectionObserver handles lazy loading, no need for loading attribute
+      // Remove loading attribute if it exists
+      img.removeAttribute("loading");
       // Ensure the grid item itself doesn't exceed its cell size
       item.style.maxWidth = "100%";
       item.style.maxHeight = finalItemHeightCheck + "px";

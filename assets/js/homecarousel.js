@@ -22,24 +22,22 @@ function initHomeCarousels() {
   let projectCount = document.querySelectorAll(".project").length;
   counters = Array(projectCount + 1).fill(0);
 
-  // Initialize lazy loading: convert non-visible images to data-src
-  // Only keep the first slide's image with src (for immediate loading)
+  // Keep all images with src attribute (no lazy loading conversion)
+  // All images will be preloaded by the loader before navigation is allowed
   $(".carouselContainer").each(function () {
     var $carousel = $(this);
     var $slides = $carousel.find(".slide");
     $slides.each(function (index) {
-      var $img = $(this).find("img[src]");
-      if ($img.length && !$img.attr("data-src")) {
-        if (index > 0) {
-          // Skip first slide (index 0) - keep it with src
-          var src = $img.attr("src");
-          $img.attr("data-src", src);
-          $img.removeAttr("src");
+      var $img = $(this).find("img");
+      if ($img.length) {
+        // If image was converted to data-src, restore it to src
+        if ($img.attr("data-src") && !$img.attr("src")) {
+          var src = $img.attr("data-src");
+          $img.attr("src", src);
+          $img.removeAttr("data-src");
         }
-        // Add loading="lazy" to all images for browser optimization
-        if (!$img.attr("loading")) {
-          $img.attr("loading", index === 0 ? "eager" : "lazy");
-        }
+        // Remove loading="lazy" since we're preloading everything
+        $img.removeAttr("loading");
       }
     });
   });

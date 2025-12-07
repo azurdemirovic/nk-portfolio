@@ -1,0 +1,68 @@
+warning: in the working copy of 'assets/js/homecarousel.js', LF will be replaced by CRLF the next time Git touches it
+ assets/js/homecarousel.js                          |  24 [32m+++[m[31m--[m
+ assets/js/loader.js                                | 102 [32m++++++++++++[m[31m---------[m
+ assets/js/responsivegrid.js                        |   7 [32m+[m[31m-[m
+ .../kalendar-mockup/mockup kalendar final -01.jpg  | Bin [31m214041[m -> [32m48662[m bytes
+ .../kalendar-mockup/mockup kalendar final -01.png  | Bin [31m846075[m -> [32m464998[m bytes
+ .../kalendar-mockup/mockup kalendar final -02.jpg  | Bin [31m489529[m -> [32m131651[m bytes
+ .../kalendar-mockup/mockup kalendar final -02.png  | Bin [31m1352111[m -> [32m967859[m bytes
+ .../kalendar-mockup/mockup kalendar final -03.jpg  | Bin [31m491691[m -> [32m129299[m bytes
+ .../kalendar-mockup/mockup kalendar final -03.png  | Bin [31m1401026[m -> [32m970728[m bytes
+ .../kalendar-mockup/mockup kalendar final -04.jpg  | Bin [31m479198[m -> [32m127595[m bytes
+ .../kalendar-mockup/mockup kalendar final -04.png  | Bin [31m1325187[m -> [32m947960[m bytes
+ .../kalendar-mockup/mockup kalendar final -05.jpg  | Bin [31m442394[m -> [32m114226[m bytes
+ .../kalendar-mockup/mockup kalendar final -05.png  | Bin [31m1169117[m -> [32m874642[m bytes
+ .../kalendar-mockup/mockup kalendar final -06.jpg  | Bin [31m477298[m -> [32m126122[m bytes
+ .../kalendar-mockup/mockup kalendar final -06.png  | Bin [31m1338557[m -> [32m950529[m bytes
+ .../kalendar-mockup/mockup kalendar final -07.jpg  | Bin [31m489005[m -> [32m129972[m bytes
+ .../kalendar-mockup/mockup kalendar final -07.png  | Bin [31m1388671[m -> [32m967770[m bytes
+ media/pages/kalendar-mockup/text.jpg               | Bin [31m280022[m -> [32m42971[m bytes
+ media/pages/mockup-desiderata/10-11.jpg            | Bin [31m3372979[m -> [32m105321[m bytes
+ media/pages/mockup-desiderata/2 -3.jpg             | Bin [31m4316938[m -> [32m217241[m bytes
+ media/pages/mockup-desiderata/4-5.jpg              | Bin [31m4853736[m -> [32m246655[m bytes
+ media/pages/mockup-desiderata/6-7.jpg              | Bin [31m7976079[m -> [32m314538[m bytes
+ media/pages/mockup-desiderata/8-9.jpg              | Bin [31m5450408[m -> [32m252071[m bytes
+ media/pages/mockup-desiderata/cover.jpg            | Bin [31m1663154[m -> [32m305504[m bytes
+ media/pages/mockup-desiderata/tekst desiderata.jpg | Bin [31m530846[m -> [32m30526[m bytes
+ media/pages/mockup-sod/10-11.jpg                   | Bin [31m2417204[m -> [32m157591[m bytes
+ media/pages/mockup-sod/12-13.jpg                   | Bin [31m1362314[m -> [32m87712[m bytes
+ media/pages/mockup-sod/2-3.jpg                     | Bin [31m1846998[m -> [32m120511[m bytes
+ media/pages/mockup-sod/4-5.jpg                     | Bin [31m2168051[m -> [32m150023[m bytes
+ media/pages/mockup-sod/6-7.jpg                     | Bin [31m1857287[m -> [32m138843[m bytes
+ media/pages/mockup-sod/8-9.jpg                     | Bin [31m1722744[m -> [32m118448[m bytes
+ media/pages/mockup-sod/cover.jpg                   | Bin [31m351637[m -> [32m83587[m bytes
+ media/pages/mockup-sod/text.jpg                    | Bin [31m429736[m -> [32m76247[m bytes
+ media/pages/publication-gabagool/10-11.jpg         | Bin [31m2189036[m -> [32m251866[m bytes
+ media/pages/publication-gabagool/12-13.jpg         | Bin [31m2019439[m -> [32m230306[m bytes
+ media/pages/publication-gabagool/14-15.jpg         | Bin [31m1708193[m -> [32m187568[m bytes
+ media/pages/publication-gabagool/16-17.jpg         | Bin [31m2071342[m -> [32m258066[m bytes
+ media/pages/publication-gabagool/2-3.jpg           | Bin [31m3111322[m -> [32m426233[m bytes
+ media/pages/publication-gabagool/4-5.jpg           | Bin [31m2065262[m -> [32m345352[m bytes
+ media/pages/publication-gabagool/6-7.jpg           | Bin [31m2092902[m -> [32m233968[m bytes
+ media/pages/publication-gabagool/8-9.jpg           | Bin [31m1891378[m -> [32m210327[m bytes
+ media/pages/publication-gabagool/cover.jpg         | Bin [31m2570212[m -> [32m415334[m bytes
+ media/pages/publication-gabagool/text.jpg          | Bin [31m403226[m -> [32m60851[m bytes
+ media/pages/publication-slavija/10-11.jpg          | Bin [31m2636590[m -> [32m320579[m bytes
+ media/pages/publication-slavija/12-13.jpg          | Bin [31m2274582[m -> [32m269115[m bytes
+ media/pages/publication-slavija/14-15.jpg          | Bin [31m2287446[m -> [32m272173[m bytes
+ media/pages/publication-slavija/2-3.jpg            | Bin [31m2467552[m -> [32m366669[m bytes
+ media/pages/publication-slavija/4-5.jpg            | Bin [31m2284036[m -> [32m374776[m bytes
+ media/pages/publication-slavija/6-7.jpg            | Bin [31m1329208[m -> [32m457159[m bytes
+ media/pages/publication-slavija/8-9.jpg            | Bin [31m2061467[m -> [32m222299[m bytes
+ media/pages/publication-slavija/cover.jpg          | Bin [31m164957[m -> [32m32183[m bytes
+ media/pages/publication-slavija/text.jpg           | Bin [31m409595[m -> [32m75855[m bytes
+ media/pages/reels/REELS PAGE .jpg                  | Bin [31m1431289[m -> [32m149720[m bytes
+ media/pages/reels/THUMBNAILS/1.png                 | Bin [31m1715193[m -> [32m1210472[m bytes
+ media/pages/reels/THUMBNAILS/2.png                 | Bin [31m903432[m -> [32m650579[m bytes
+ media/pages/reels/THUMBNAILS/3.jpg                 | Bin [31m1830926[m -> [32m267772[m bytes
+ media/pages/reels/THUMBNAILS/4.jpg                 | Bin [31m23478170[m -> [32m248566[m bytes
+ media/pages/reels/THUMBNAILS/5.png                 | Bin [31m1719548[m -> [32m1341045[m bytes
+ media/pages/reels/THUMBNAILS/6.png                 | Bin [31m1676449[m -> [32m1156627[m bytes
+ media/pages/reels/THUMBNAILS/7.jpg                 | Bin [31m19825911[m -> [32m215419[m bytes
+ media/pages/reels/THUMBNAILS/8.png                 | Bin [31m1911558[m -> [32m1428381[m bytes
+ media/pages/reels/THUMBNAILS/9.png                 | Bin [31m2392660[m -> [32m1950176[m bytes
+ media/pages/rmndr-logo/RMNDR MACKUP-01.jpg         | Bin [31m510182[m -> [32m68345[m bytes
+ media/pages/rmndr-logo/RMNDR MACKUP-02.jpg         | Bin [31m758073[m -> [32m117127[m bytes
+ media/pages/rmndr-logo/RMNDR MACKUP-03.jpg         | Bin [31m258278[m -> [32m63049[m bytes
+ media/pages/rmndr-logo/text.jpg                    | Bin [31m270142[m -> [32m54477[m bytes
+ 66 files changed, 74 insertions(+), 59 deletions(-)

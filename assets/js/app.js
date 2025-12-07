@@ -83,11 +83,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  // Initialize project carousel if we're already on a project page (direct load)
-  if (document.querySelector('div[data-barba-namespace="project"]')) {
-    initProjectCarousel();
-  }
-
   barba.init({
     timeout: 20000,
     /**

@@ -32,9 +32,8 @@ function initProjectCarousel() {
 
   // Get carousel from lightbox (where the slides actually are)
   // Lightbox is a sibling of the container, not a child, so use direct selector
-  // CRITICAL: Don't initialize with global selector - will be set per-project when opening
-  carousel = null;
-  length = 0;
+  carousel = $("#lightbox .carouselContainer");
+  length = carousel[0] ? carousel[0].children.length : 0;
 
   // Track touch events to prevent double-firing with click
   let touchStartTime = 0;
@@ -119,20 +118,11 @@ function initProjectCarousel() {
 
     // Lightbox is a sibling of the container, not a child, so use direct selector
     // But ensure we're using the lightbox from the current project page
-    // CRITICAL: Always use the lightbox that's a sibling of the current container
-    // Don't use fallback to $("#lightbox") as it might find a lightbox from a different project
     const lightbox = currentContainer.siblings("#lightbox").first();
 
-    if (!lightbox.length) {
-      console.error(
-        "Lightbox not found as sibling of current project container"
-      );
-      transitioning = false;
-      unlockSite();
-      enableScroll();
-      return;
-    }
-    const finalLightbox = lightbox;
+    // Fallback: if lightbox not found as sibling, try direct selector
+    const lightboxFallback = $("#lightbox");
+    const finalLightbox = lightbox.length ? lightbox : lightboxFallback;
 
     // Verify lightbox exists
     if (!finalLightbox.length) {
@@ -142,28 +132,6 @@ function initProjectCarousel() {
       enableScroll();
       return;
     }
-
-    // CRITICAL: Reset ALL lightboxes first to ensure no state from previous projects
-    // This prevents showing slides from a different project
-    // More aggressive reset to handle browser caching issues
-    const allLightboxes = $("div#lightbox");
-    allLightboxes.each(function () {
-      const $lightbox = $(this);
-      $lightbox.removeClass("open");
-      $lightbox.css({
-        visibility: "hidden",
-        "clip-path": "",
-        "background-color": "",
-      });
-      // Reset all slides in all lightboxes
-      $lightbox.find(".slide").each(function () {
-        $(this).css({
-          display: "none",
-          "z-index": 1,
-          visibility: "hidden",
-        });
-      });
-    });
 
     // Get the lightbox carousel to determine length
     carousel = finalLightbox.find(".carouselContainer");
@@ -190,41 +158,25 @@ function initProjectCarousel() {
       enableScroll();
       return;
     }
-    // CRITICAL: Explicitly hide ALL slides first, then show only the target
-    // This ensures no slides from previous projects are visible
-    // More aggressive reset to handle browser caching and state persistence
-    finalLightbox.find(".slide").each(function () {
-      const $slide = $(this);
-      $slide.css({
-        display: "none",
-        "z-index": 1,
-        visibility: "hidden",
-      });
-    });
-
     loadPictureEl(targetSlide);
 
-    // Show only the clicked slide - explicitly set all properties
-    const $targetSlide = finalLightbox.find("#slide-" + index);
-    $targetSlide.css({
-      display: "",
-      "z-index": 2,
-      visibility: "visible",
-    });
+    // hide all slides except the clicked slide
+    finalLightbox.find(".slide").css("display", "none");
+    finalLightbox.find("#slide-" + index).css("display", "");
 
+    finalLightbox.find(".slide").css("z-index", 1);
+    finalLightbox.find("#slide-" + index).css("z-index", 2);
     finalLightbox.find(".slidenum").html(pad(index) + "/" + pad(length));
 
     // Update current index for navigation - always reset to the opened image
     // This ensures navigation works correctly even when switching between projects
     currentLightboxIndex = index;
     lightboxLength = length;
-
+    
     // Validate that the index exists in the current lightbox
     const currentLightbox = finalLightbox;
     const currentCarousel = currentLightbox.find(".carouselContainer");
-    const actualLength = currentCarousel[0]
-      ? currentCarousel[0].children.length
-      : 0;
+    const actualLength = currentCarousel[0] ? currentCarousel[0].children.length : 0;
     if (actualLength > 0 && actualLength !== length) {
       // Lightbox length changed (different project), reset index if needed
       lightboxLength = actualLength;
@@ -277,87 +229,60 @@ function initProjectCarousel() {
   // Bind both click and touch events for better cross-device compatibility
   // Use event delegation scoped to project namespace to ensure correct project's grid items
   // Remove any existing handlers first to prevent duplicates after page transitions
-  // Use a small delay to ensure DOM is fully ready, especially after responsive grid adjustments
-  // Increased delay for production environments where resources may load slower
-  setTimeout(() => {
-    $(document)
-      .off("click touchstart", "div[data-barba-namespace='project'] .grid-item")
-      .on(
-        "touchstart",
-        "div[data-barba-namespace='project'] .grid-item",
-        function (e) {
+  $(document)
+    .off("click touchstart", "div[data-barba-namespace='project'] .grid-item")
+    .on(
+      "touchstart",
+      "div[data-barba-namespace='project'] .grid-item",
+      function (e) {
+        e.preventDefault(); // Prevent default touch behavior (scrolling, etc.)
+        e.stopPropagation();
+        touchStartTime = Date.now();
+        touchTarget = this;
+        openLightboxHandler.call(this, e);
+      }
+    )
+    .on(
+      "click",
+      "div[data-barba-namespace='project'] .grid-item",
+      function (e) {
+        // Only handle click if it wasn't from a touch
+        if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
+          openLightboxHandler.call(this, e);
+        }
+        touchStartTime = 0;
+        touchTarget = null;
+      }
+    );
+
+  // Also bind directly to existing elements as a fallback
+  // This ensures immediate binding if elements already exist
+  // Scope to current project container to avoid conflicts between projects
+  const currentProjectContainer = $(
+    "div[data-barba='container'][data-barba-namespace='project']"
+  );
+  if (currentProjectContainer.length) {
+    const gridItems = currentProjectContainer.find(".grid-item");
+    if (gridItems.length > 0) {
+      gridItems
+        .off("click touchstart")
+        .on("touchstart", function (e) {
           e.preventDefault(); // Prevent default touch behavior (scrolling, etc.)
           e.stopPropagation();
           touchStartTime = Date.now();
           touchTarget = this;
-          // Capture event properties before delay to avoid event pooling issues
-          const eventType = e.type;
-          // Create synthetic event object with captured properties
-          const syntheticEvent = {
-            type: eventType,
-            stopPropagation: function () {}, // No-op since event already propagated
-          };
-          // Use a small delay to ensure touch event is fully processed
-          setTimeout(() => {
-            openLightboxHandler.call(this, syntheticEvent);
-          }, 50);
-        }
-      )
-      .on(
-        "click",
-        "div[data-barba-namespace='project'] .grid-item",
-        function (e) {
+          openLightboxHandler.call(this, e);
+        })
+        .on("click", function (e) {
           // Only handle click if it wasn't from a touch
           if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
             openLightboxHandler.call(this, e);
           }
           touchStartTime = 0;
           touchTarget = null;
-        }
-      );
-  }, 200);
-
-  // Also bind directly to existing elements as a fallback
-  // This ensures immediate binding if elements already exist
-  // Scope to current project container to avoid conflicts between projects
-  // Use same delay to ensure DOM is ready (matching the delegation delay)
-  setTimeout(() => {
-    const currentProjectContainer = $(
-      "div[data-barba='container'][data-barba-namespace='project']"
-    );
-    if (currentProjectContainer.length) {
-      const gridItems = currentProjectContainer.find(".grid-item");
-      if (gridItems.length > 0) {
-        gridItems
-          .off("click touchstart")
-          .on("touchstart", function (e) {
-            e.preventDefault(); // Prevent default touch behavior (scrolling, etc.)
-            e.stopPropagation();
-            touchStartTime = Date.now();
-            touchTarget = this;
-            // Capture event properties before delay to avoid event pooling issues
-            const eventType = e.type;
-            // Create synthetic event object with captured properties
-            const syntheticEvent = {
-              type: eventType,
-              stopPropagation: function () {}, // No-op since event already propagated
-            };
-            // Use a small delay to ensure touch event is fully processed
-            setTimeout(() => {
-              openLightboxHandler.call(this, syntheticEvent);
-            }, 50);
-          })
-          .on("click", function (e) {
-            // Only handle click if it wasn't from a touch
-            if (touchStartTime === 0 || Date.now() - touchStartTime > 500) {
-              openLightboxHandler.call(this, e);
-            }
-            touchStartTime = 0;
-            touchTarget = null;
-          });
-      }
+        });
     }
-  }, 150);
+  }
 
   function exitLightboxOnEsc(e) {
     if (e.key === "Escape") {
@@ -394,15 +319,10 @@ function initProjectCarousel() {
     );
     if (!currentContainer.length) return;
 
-    // CRITICAL: Always use the lightbox that's a sibling of the current container
-    // Don't use fallback to $("#lightbox") as it might find a lightbox from a different project
     const lightbox = currentContainer.siblings("#lightbox").first();
-    if (!lightbox.length) {
-      console.error("Lightbox not found for navigation");
-      return;
-    }
-    const finalLightbox = lightbox;
-
+    const lightboxFallback = $("#lightbox");
+    const finalLightbox = lightbox.length ? lightbox : lightboxFallback;
+    
     if (!finalLightbox.hasClass("open")) return;
 
     const carousel = finalLightbox.find(".carouselContainer");
@@ -414,7 +334,7 @@ function initProjectCarousel() {
 
     // Update lightboxLength to match current project
     lightboxLength = actualLength;
-
+    
     // Validate currentLightboxIndex is within bounds
     if (currentLightboxIndex < 1 || currentLightboxIndex > lightboxLength) {
       currentLightboxIndex = 1;
@@ -476,10 +396,7 @@ function initProjectCarousel() {
     })
     .on("click", "#lightbox .leftButton", function (e) {
       // Only handle click if it wasn't from a touch
-      if (
-        lightboxTouchStartTime === 0 ||
-        Date.now() - lightboxTouchStartTime > 500
-      ) {
+      if (lightboxTouchStartTime === 0 || Date.now() - lightboxTouchStartTime > 500) {
         e.preventDefault();
         e.stopPropagation();
         navigateLightbox("prev");
@@ -497,10 +414,7 @@ function initProjectCarousel() {
     })
     .on("click", "#lightbox .rightButton", function (e) {
       // Only handle click if it wasn't from a touch
-      if (
-        lightboxTouchStartTime === 0 ||
-        Date.now() - lightboxTouchStartTime > 500
-      ) {
+      if (lightboxTouchStartTime === 0 || Date.now() - lightboxTouchStartTime > 500) {
         e.preventDefault();
         e.stopPropagation();
         navigateLightbox("next");
@@ -516,23 +430,8 @@ function initProjectCarousel() {
       lockSite();
     }
 
-    // Get the current project's lightbox to ensure we're closing the correct one
-    const currentContainer = $(
-      "div[data-barba='container'][data-barba-namespace='project']"
-    );
     // Lightbox is a sibling of the container, not a child, so use direct selector
-    // CRITICAL: Always use the lightbox that's a sibling of the current container
-    // Don't use fallback to $("#lightbox") as it might find a lightbox from a different project
-    const lightbox = currentContainer.length
-      ? currentContainer.siblings("#lightbox").first()
-      : $();
-
-    if (!lightbox || !lightbox.length) {
-      console.error("Lightbox not found for exit");
-      transitioning = false;
-      unlockSite();
-      return;
-    }
+    const lightbox = $("#lightbox");
 
     lightbox.css({
       "clip-path": "inset(0% 100% 0% 0%)",
@@ -568,22 +467,9 @@ function initProjectCarousel() {
         if (entry.isIntersecting) {
           const index = entry.target.dataset.index;
           // Load from lightbox carousel - lightbox is a sibling, not a child
-          // CRITICAL: Use the current project's lightbox, not just any lightbox
-          const currentContainer = $(
-            "div[data-barba='container'][data-barba-namespace='project']"
-          );
-          // Don't use fallback to $("#lightbox") as it might find a lightbox from a different project
-          const currentLightbox = currentContainer.length
-            ? currentContainer.siblings("#lightbox").first()
-            : null;
-          if (currentLightbox && currentLightbox.length) {
-            const lightboxCarousel = currentLightbox.find(".carouselContainer");
-            if (
-              lightboxCarousel[0] &&
-              lightboxCarousel[0].children[index - 1]
-            ) {
-              loadPictureEl(lightboxCarousel[0].children[index - 1]);
-            }
+          const lightboxCarousel = $("#lightbox .carouselContainer");
+          if (lightboxCarousel[0] && lightboxCarousel[0].children[index - 1]) {
+            loadPictureEl(lightboxCarousel[0].children[index - 1]);
           }
           observer.unobserve(entry.target);
         }

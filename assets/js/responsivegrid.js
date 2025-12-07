@@ -317,12 +317,6 @@ if (typeof barba !== "undefined") {
   document.addEventListener("barba:after-enter", function (event) {
     if (event.next.namespace === "project") {
       setTimeout(adjustGridSizing, 300);
-      // Re-initialize project carousel after grid adjustments to ensure event handlers are bound
-      setTimeout(() => {
-        if (typeof initProjectCarousel === "function") {
-          initProjectCarousel();
-        }
-      }, 400);
     }
   });
 }

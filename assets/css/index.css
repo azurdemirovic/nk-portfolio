@@ -207,30 +207,67 @@ div[data-project-color="#d5d7d9"] .tinted-bg {
 }
 
 /* INTRODUCTION */
-.centered-list {
-  --stWidth: 32px;
+.intro-copy {
+  width: min(60vw, 1020px);
+  max-width: 1020px;
+  min-width: 0;
+  margin: 0 auto;
+  display: block;
+  --intro-line-width: 820px;
+  font-size: clamp(14px, 1.8vw, 18px);
+  line-height: 1.05;
+}
 
-  position: relative;
-  left: calc(var(--stWidth) / 2);
-  width: calc(var(--centeredTextWidth) - var(--stWidth));
-  align-content: center;
-  text-align: start;
+.intro-line {
+  width: var(--intro-line-width);
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.intro-line + .intro-line {
+  margin-top: 0;
+}
+
+.intro-main,
+.intro-justify,
+.intro-center,
+.intro-end {
   display: block;
 }
 
-.centered {
-  width: var(--centeredTextWidth);
-  display: block;
-  margin: 0 auto;
-  text-align: start;
+.intro-line-1 {
+  text-align: justify;
+  text-align-last: justify;
 }
 
-#introduction ul li::before {
-  content: "NK";
-  position: absolute;
-  transform: translateX(-125%);
+.intro-line-2 {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+}
+
+.intro-line-3 {
+  text-align: justify;
+  text-align-last: justify;
+}
+
+.intro-line-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: end;
+}
+
+.intro-line-4 .intro-main {
+  text-align: left;
+}
+
+.intro-center {
+  text-align: center;
+}
+
+.intro-end {
+  text-align: right;
 }
 
 #info #contact {
@@ -240,6 +277,7 @@ div[data-project-color="#d5d7d9"] .tinted-bg {
 #introduction {
   padding-top: 191px;
   padding-bottom: 191px;
+  width: 100%;
 }
 
 #info {
@@ -1149,27 +1187,66 @@ div[data-barba-namespace="homepage"] .rightButton {
     display: block;
   }
 
-  .centered-list {
-    width: calc(100% - var(--stWidth));
-    text-align: left;
-  }
-
   #introduction {
     text-align: left;
     padding: 48px 0px;
+    width: 100%;
   }
 
-  .centered-list {
-    --stWidth: 36px;
+  .intro-copy {
+    width: 100%;
+    min-width: 0;
+    --intro-line-width: 100%;
+    font-size: clamp(9px, 2.35vw, 12px);
+    line-height: 1.02;
   }
 
-  #introduction {
-    width: calc(100% - var(--projNumWidth));
+  .intro-line {
+    width: var(--intro-line-width);
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  #introduction ul li::before {
-    /* move it a smidge to the left */
-    transform: translateX(calc(calc(var(--projNumWidth) + 1px) * -1));
+  .intro-line + .intro-line {
+    margin-top: 0;
+  }
+
+  .intro-line-2,
+  .intro-line-4 {
+    display: grid;
+  }
+
+  .intro-center,
+  .intro-end,
+  .intro-main,
+  .intro-justify {
+    display: block;
+    text-align: left;
+  }
+
+  .intro-line-1,
+  .intro-line-3 {
+    text-align: justify;
+    text-align-last: justify;
+  }
+
+  .intro-line-2 {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+
+  .intro-line-4 {
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: end;
+  }
+
+  .intro-center {
+    text-align: center;
+  }
+
+  .intro-end {
+    text-align: right;
   }
 
   .projectLabel {

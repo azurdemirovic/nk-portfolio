@@ -213,7 +213,7 @@ div[data-project-color="#d5d7d9"] .tinted-bg {
   min-width: 0;
   margin: 0 auto;
   display: block;
-  --intro-line-width: 820px;
+  --intro-line-width: 660px;
   font-size: clamp(14px, 1.8vw, 18px);
   line-height: 1.05;
 }
@@ -297,14 +297,15 @@ div[data-project-color="#d5d7d9"] .tinted-bg {
 }
 
 .headerContentWrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: flex-start;
-  justify-content: space-between;
   gap: 20px;
   width: 100%;
 }
 
 .headerContentWrapper > p {
+  grid-column: 1;
   margin: 0;
   padding-left: 0;
   box-sizing: border-box;
@@ -312,6 +313,7 @@ div[data-project-color="#d5d7d9"] .tinted-bg {
 }
 
 #infoButton {
+  grid-column: 2;
   color: black;
   height: fit-content;
   border-bottom: 2px solid white;
@@ -1360,23 +1362,27 @@ div[data-barba-namespace="homepage"] .rightButton {
   }
 
   .headerContentWrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     width: 100%;
     overflow: hidden;
   }
 
   .headerContentWrapper::before {
-    content: "";
-    width: var(--projNumWidth);
-    float: left;
-    height: 1px;
+    content: none;
   }
 
   .headerContentWrapper > p:first-of-type {
+    grid-column: 1;
     padding-left: 0;
     margin-left: 0;
     box-sizing: border-box;
     margin-right: 60px;
     overflow: hidden;
+  }
+
+  #infoButton {
+    grid-column: 2;
   }
 
   #headerContainer p,
@@ -1388,8 +1394,8 @@ div[data-barba-namespace="homepage"] .rightButton {
 
   #infoButton {
     margin-left: 0;
-    float: right;
-    clear: none;
+    float: none;
+    clear: initial;
   }
 
   .carouselArea,
